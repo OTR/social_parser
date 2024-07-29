@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "parser-makaron"
+version = "0.0.1"
+description = "Social network comment parser"
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "2.32.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
