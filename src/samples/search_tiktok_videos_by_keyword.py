@@ -1,5 +1,7 @@
 """"""
 import json
+from pathlib import Path
+from typing import IO
 
 import requests
 
@@ -23,12 +25,16 @@ def download():
     print(response.json())
 
 
-def read_from_file():
+def read_from_tokapi_mobile():
     """
     Reads JSON file from filesystem to not waste API call quotas
     Prints out author, description and url of found videos
     """
-    file = open("../../.data/rapid_api_tiktok_sample.json")
+    parent_path: Path = Path(".").absolute().parent.parent
+    path_to_json_sample: Path = (parent_path
+                                 / ".data"
+                                 / "tokapi_mobile_response_sample.json").resolve()
+    file: IO[str] = open(path_to_json_sample)
     json_s = json.load(file)
     items = json_s["search_item_list"]
     for item in items:
@@ -43,4 +49,4 @@ def read_from_file():
 
 if __name__ == '__main__':
     # download()
-    read_from_file()
+    read_from_tokapi_mobile()
