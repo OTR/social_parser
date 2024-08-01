@@ -9,8 +9,8 @@ import os
 from config.settings.prod_settings import *
 
 # Your login on hosting
-U_LOGIN = os.environ.get("LOGIN")
-U_DB_PASSWD = os.environ.get("DB_PASSWD")
+U_LOGIN = os.environ.get("U_LOGIN")
+U_DB_PASSWD = os.environ.get("U_DB_PASSWD")
 # MySQL table name, creates on a dashboard
 U_TABLE_NAME = "test_targets"
 
@@ -32,7 +32,6 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_ROOT = f"/home/{U_LOGIN}/social_parser/static"
 STATIC_DIR = BASE_DIR / "static"
 STATICFILES_DIRS = [STATIC_DIR]
 STATIC_URL = "/static/"
