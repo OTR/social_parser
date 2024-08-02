@@ -1,5 +1,5 @@
 """"""
-from service.youtube import VideoDTO
+from service.youtube.video_dto import VideoDTO
 from datetime import datetime
 
 

@@ -1,12 +1,15 @@
 """"""
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
 
-from service.youtube import VideoDTO, YoutubeDTO, YoutubeMapper
+from service.youtube.youtube_dto import YoutubeDTO
+from service.youtube.video_dto import VideoDTO
+from service.youtube.youtube_mapper import YoutubeMapper
 
-load_dotenv()
+load_dotenv(Path(__file__).parent.parent.parent / "python_anywhere.env")
 
 
 class YoutubeApiClient:
@@ -24,7 +27,7 @@ class YoutubeApiClient:
             developerKey=self.YOUTUBE_DATA_API_V3_KEY
         )
 
-    def get_latest_videos(self, keyword=None, max_results=50, page_token=""):
+    def get_latest_videos(self, keyword=None, max_results=50, page_token="") -> YoutubeDTO:
         """"""
         query: str = keyword if keyword is not None else self.DEFAULT_KEYWORD
         search_response: dict = self.youtube_object.search().list(

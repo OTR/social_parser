@@ -1,7 +1,7 @@
 """"""
 from dataclasses import dataclass
 
-from service.youtube import VideoDTO
+from service.youtube.video_dto import VideoDTO
 
 
 @dataclass
