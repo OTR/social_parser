@@ -42,6 +42,7 @@ COOKIE_CUTTERS = {
     "UC9scATp5FnEnouNqcRyYHoA",  # Бригада Арсена Маркаряна
     "UCFfDebQoDURriy32Fg7ZvKg",  # LoveShorts
     "UCiAbSBhhG61ZxNtJHDS0-_A",  # Артем
+    "UCMzntpQgC3M-TnflqXxNkGA",  # MOTIVATIONSARSENA
 }
 
 REJECTED = ""
