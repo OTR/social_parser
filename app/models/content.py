@@ -2,14 +2,21 @@
 from django.db import models
 from django.utils import timezone
 from app.models.content_status import ContentStatus
+from app.models.content_platform import ContentPlatform
 
 
 class ContentModel(models.Model):
     """"""
     STATUS_CHOICES = [(status.value, status.name) for status in ContentStatus]
+    PLATFORM_CHOICES = [(platform.value, platform.name) for platform in ContentPlatform]
 
     username = models.CharField(max_length=255, null=True)
     subscribers = models.IntegerField(null=True)
+    platform = models.CharField(
+        max_length=20,
+        choices=PLATFORM_CHOICES,
+        default=ContentPlatform.OTHER.value,
+    )
     link = models.CharField(max_length=255)
     seized_top = models.BooleanField(verbose_name="seized top", null=True)
     views = models.IntegerField(null=True)
