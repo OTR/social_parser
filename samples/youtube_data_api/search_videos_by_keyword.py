@@ -7,7 +7,7 @@ DEVELOPER_KEY = "AIzaSyCLBJESzFDNFYoOXkq40wgEdOXyTE_Us3g"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
-COOKIE_CUTTERS = {
+HIGHLIGHTERS = {
     "UCKeiw4bjGb80LuGhasWpwUA",  # Arsen Markaryan Errday
     "UC6hLw66ZPkEGJKgnWpbsX4w",  # Markaryan Tendency
     "UCx4msx5RPNoNymPnW8b9mqw",  # @narezus
@@ -45,8 +45,6 @@ COOKIE_CUTTERS = {
     "UCMzntpQgC3M-TnflqXxNkGA",  # MOTIVATIONSARSENA
 }
 
-REJECTED = ""
-
 
 def youtube_search_keyword(query, max_results, page_token=None):
     youtube_object = build(
@@ -79,7 +77,7 @@ def youtube_search_keyword(query, max_results, page_token=None):
         video_id: str = result["id"]["videoId"]
         description: str = result['snippet']['description']
         thumbnail_url: str = result['snippet']['thumbnails']['default']['url']
-        if channel_id not in COOKIE_CUTTERS:
+        if channel_id not in HIGHLIGHTERS:
             print(f" {channel_id} {channel_title} {video_id} {title}")
 
 
