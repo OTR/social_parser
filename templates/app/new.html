@@ -1,5 +1,6 @@
 {% extends "app/base.html" %}
 {% block content %}
+{% load custom_filters %}
 <div class="container">
       {% if youtube_dto %}
       {% if youtube_dto.entities %}
@@ -19,8 +20,11 @@
                        <!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ entity.video_id }}?rel=0" allowfullscreen></iframe> -->
                     </div>
                     <pre></pre>
-                    <h5 class="card-title">Dark card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-title">Channel name: {{ entity.channel_title }}</p>
+                    <p class="card-text">Video description: {{ entity.description }}</p>
+                    <!-- https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#date -->
+                    <p class="">Published at: {{ entity.published_at|date:"d.m.Y H:i:s O" }}</p>
+                    <p class="">{{ entity.published_at|time_since }}</p>
                 </div>
                 <div class="card-footer bg-transparent border-dark d-flex justify-content-between">
                     <button type="button" class="btn btn-primary">Primary</button>
