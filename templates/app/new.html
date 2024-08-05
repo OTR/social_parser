@@ -40,8 +40,29 @@
       {% if youtube_dto.next_page_token %}
       <div class="row">
         <div class="col-12">
+        <ul class="pagination pagination-lg justify-content-center pg-dark">
+            {# Previous page block #}
+            {% if youtube_dto.prev_page_token %}
+            <li class="page-item">
+              <a class="page-link"
+                 href="?prev_page_token={{ youtube_dto.prev_page_token }}">Prev</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Prev</a>
+            </li>
+            {% endif %}
 
-            <p>{{ youtube_dto.next_page_token }}</p>
+            {# Next page block #}
+            {% if youtube_dto.next_page_token %}
+            <li class="page-item">
+              <a class="page-link"
+                 href="?next_page_token={{ youtube_dto.next_page_token }}">Next</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Next</a>
+            </li>
+            {% endif %}
+        </ul>
         </div>
       </div>
       {% endif %}

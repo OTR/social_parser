@@ -52,6 +52,7 @@ class YoutubeApiClient:
 
             search_response = {}
         next_page_token: str = search_response.get("nextPageToken", "")
+        prev_page_token: str = search_response.get("prevPageToken", "")
         entities: list = search_response.get("items", [])
         dtos: list[VideoDTO] = []
         for entity in entities:
@@ -59,5 +60,6 @@ class YoutubeApiClient:
 
         return YoutubeDTO(
             next_page_token=next_page_token,
+            prev_page_token=prev_page_token,
             entities=dtos
         )

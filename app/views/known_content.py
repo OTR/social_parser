@@ -7,7 +7,6 @@ from app.models.content_status import ContentStatus
 
 class KnownContentView(ListView):
     """"""
-
     model = ContentModel
     paginate_by = 10
     template_name = "app/known_content.html"
@@ -29,3 +28,11 @@ class KnownContentView(ListView):
                 queryset = queryset.filter(status=ContentStatus.NOT_LABELED.value)
 
         return queryset
+
+    def get_context_data(self, **kwargs):
+        """"""
+        context = super().get_context_data(**kwargs)
+        status: str = self.request.GET.get("status", "all")
+        context["status"] = status
+
+        return context

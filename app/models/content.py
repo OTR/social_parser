@@ -46,6 +46,10 @@ class ContentModel(models.Model):
         default=ContentStatus.NOT_LABELED.value,
     )
 
+    class Meta:
+        """"""
+        ordering = ['id']  # Default ordering by 'id'
+
     def __str__(self):
         """Redefine string representation of a table row in admin site"""
         string_repr: str = ""
