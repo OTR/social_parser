@@ -5,11 +5,14 @@ from django.contrib.auth.models import Group, User
 from app.models import ContentModel, HighlightModel
 
 
+@admin.register(ContentModel)
 class ContentModelAdmin(admin.ModelAdmin):
     """"""
     readonly_fields = ("id",)
+    list_filter = ("status", )
 
 
+@admin.register(HighlightModel)
 class HightlighterModelAdmin(admin.ModelAdmin):
     """"""
     readonly_fields = ("id",)
@@ -17,5 +20,3 @@ class HightlighterModelAdmin(admin.ModelAdmin):
 
 admin.site.unregister(Group)
 admin.site.unregister(User)
-admin.site.register(ContentModel, ContentModelAdmin)
-admin.site.register(HighlightModel, HightlighterModelAdmin)

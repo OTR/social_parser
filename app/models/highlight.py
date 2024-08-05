@@ -10,4 +10,4 @@ class HighlightModel(models.Model):
 
     def __str__(self):
         """"""
-        return  str(self.channel_title)
+        return str(self.channel_title)

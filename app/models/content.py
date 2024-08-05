@@ -1,4 +1,12 @@
-""""""
+"""
+username
+subscribers
+platform
+content_id
+link
+seized_top
+
+"""
 from django.db import models
 from django.utils import timezone
 from app.models.content_status import ContentStatus

@@ -31,8 +31,19 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/list">List Targets</a>
+       <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          List Targets
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/list?status=all">All</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/list?status=in_progress">In Progress</a>
+          <a class="dropdown-item" href="/list?status=to_do">To Do</a>
+          <a class="dropdown-item" href="/list?status=done">Done</a>
+          <a class="dropdown-item" href="/list?status=rejected">Rejected</a>
+          <a class="dropdown-item" href="/list?status=not_labeled">Not Labeled</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/new">New Targets</a>

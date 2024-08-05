@@ -18,7 +18,11 @@
         {% for content in page_obj %}
         <tr>
           <td>{{ content.id }}</td>
-          <td>{{ content.link }}</td>
+          {% if content.title %}
+          <td><a target="_blank" href="{{ content.link }}" >{{ content.title }}</a></td>
+          {% else %}
+          <td><a target="_blank" href="{{ content.link }}" >{{ content.link }}</a></td>
+          {% endif %}
         </tr>
         {% endfor %}
         </tbody>

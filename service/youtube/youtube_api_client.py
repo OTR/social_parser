@@ -4,6 +4,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 from service.youtube.youtube_dto import YoutubeDTO
 from service.youtube.video_dto import VideoDTO
@@ -14,6 +15,8 @@ load_dotenv(Path(__file__).parent.parent.parent / "python_anywhere.env")
 
 class YoutubeApiClient:
     """"""
+    QUOTA_REASON: str = ('The request cannot be completed because you have exceeded your '
+                         '<a href="/youtube/v3/getting-started#quota">quota</a>.')
 
     def __init__(self):
         """"""
@@ -30,19 +33,25 @@ class YoutubeApiClient:
     def get_latest_videos(self, keyword=None, max_results=50, page_token="") -> YoutubeDTO:
         """"""
         query: str = keyword if keyword is not None else self.DEFAULT_KEYWORD
-        search_response: dict = self.youtube_object.search().list(
-            q=query,
-            order="date",
-            type="video",
-            safeSearch="none",
-            videoDuration="any",
-            regionCode="RU",
-            part="id, snippet",
-            maxResults=max_results,
-            pageToken=page_token
-        ).execute()
+        try:
+            search_response: dict = self.youtube_object.search().list(
+                q=query,
+                order="date",
+                type="video",
+                safeSearch="none",
+                videoDuration="any",
+                regionCode="RU",
+                part="id, snippet",
+                maxResults=max_results,
+                pageToken=page_token
+            ).execute()
+        except HttpError as err:
+            if err.status_code == 403 and err.reason == YoutubeApiClient.QUOTA_REASON:
+                # TODO LOGGING
+                print("Quota exceeded")
 
-        next_page_token: str = search_response.get("nextPageToken")
+            search_response = {}
+        next_page_token: str = search_response.get("nextPageToken", "")
         entities: list = search_response.get("items", [])
         dtos: list[VideoDTO] = []
         for entity in entities:

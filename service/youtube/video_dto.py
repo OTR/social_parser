@@ -13,7 +13,3 @@ class VideoDTO:
     video_id: str
     description: str
     thumbnail_url: str
-
-    @property
-    def strftime(self):
-        return "GG"
