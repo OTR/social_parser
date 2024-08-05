@@ -1,5 +1,10 @@
 # Метод search
 
+## API Keys
+
+AIzaSyCLBJESzFDNFYoOXkq40wgEdOXyTE_Us3g
+AIzaSyAgTLMvZ_EFFMgSlrYZXy3Nsdf3a01U8aY
+
 ## HTTP-запрос
 
 `GET https://www.googleapis.com/youtube/v3/search`
