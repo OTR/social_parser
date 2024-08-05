@@ -23,7 +23,7 @@ class ContentModel(models.Model):
     PLATFORM_CHOICES = [(platform.value, platform.name) for platform in ContentPlatform]
 
     username = models.CharField(max_length=255, null=True)
-    subscribers = models.IntegerField(null=True)
+    subscribers = models.IntegerField(null=True, blank=True)
     platform = models.CharField(
         max_length=20,
         choices=PLATFORM_CHOICES,
@@ -32,10 +32,10 @@ class ContentModel(models.Model):
     content_id = models.CharField(max_length=255, verbose_name="Content ID", null=True)
     link = models.CharField(max_length=255)
     seized_top = models.BooleanField(verbose_name="seized top", null=True)
-    views = models.IntegerField(null=True)
-    likes = models.IntegerField(null=True)
-    shares = models.IntegerField(null=True)
-    comments = models.IntegerField(null=True)
+    views = models.IntegerField(null=True, blank=True)
+    likes = models.IntegerField(null=True, blank=True)
+    shares = models.IntegerField(null=True, blank=True)
+    comments = models.IntegerField(null=True, blank=True)
     published_at = models.DateTimeField(verbose_name="published at", default=timezone.now())
     title = models.CharField(max_length=255, null=True)
     reason = models.TextField(null=True)

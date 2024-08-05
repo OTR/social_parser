@@ -20,15 +20,43 @@
                        <!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ entity.video_id }}?rel=0" allowfullscreen></iframe> -->
                     </div>
                     <pre></pre>
-                    <p class="card-title">Channel name: {{ entity.channel_title }}</p>
+
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text" id="sizing-sm">Channel name:</span>
+                        </div>
+                        <input type="text" value="{{ entity.channel_title }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text" id="sizing-sm">Video title:</span>
+                        </div>
+                        <input type="text" value="{{ entity.title }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text" id="contentId">Content ID:</span>
+                        </div>
+                        <input type="text" value="{{ entity.video_id }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Channel ID:</span>
+                        </div>
+                        <input type="text" value="{{ entity.channel_id }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
                     <p class="card-text">Video description: {{ entity.description }}</p>
                     <!-- https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#date -->
-                    <p class="">Published at: {{ entity.published_at|date:"d.m.Y H:i:s O" }}</p>
+                    <p class="">Published at: {{ entity.published_at|date:"d.m.Y H:i:s" }}</p>
                     <p class="">{{ entity.published_at|time_since }}</p>
                 </div>
                 <div class="card-footer bg-transparent border-dark d-flex justify-content-between">
-                    <button type="button" class="btn btn-primary">Primary</button>
-                    <button type="button" class="btn btn-dark text-right">Dark</button>
+                    <button type="button" class="btn btn-primary">Mark as Highlighter</button>
+                    <button type="button" class="btn btn-dark text-right">Add to Rejected</button>
                 </div>
             </div>
 

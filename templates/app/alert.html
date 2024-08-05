@@ -1,0 +1,66 @@
+{% extends "app/base.html" %}
+
+{% block title %}Alert me{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+      <p>Coming Soon</p>
+  </div>
+</div>
+    <script>
+        const originalTitle = document.title;
+        let isBlinking = false;
+        let isAlertWindowSet = false;
+        let blinkInterval;
+
+        // Function to start blinking the tab title
+        function startBlinking() {
+           if (!isAlertWindowSet) {
+                    isAlertWindowSet = true;
+                    alert();
+            }
+            if (!isBlinking) {
+                isBlinking = true;
+                blinkInterval = setInterval(() => {
+                    document.title = document.title === 'New Content!' ? originalTitle : 'New Content!';
+                }, 1000); // Change title every second
+            }
+        }
+
+        // Function to stop blinking the tab title
+        function stopBlinking() {
+            isBlinking = false;
+            isAlertWindowSet = false;
+            clearInterval(blinkInterval);
+            document.title = originalTitle;
+        }
+
+        // Function to check for new content
+        async function checkForNewContent() {
+            try {
+                 const response = await fetch('/api/new');
+                //const response = await fetch('/');
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.has_new_content === true) {
+                        startBlinking();
+                    } else {
+                        stopBlinking();
+                    }
+                } else {
+                    console.error('Failed to fetch new content:', response.status, response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching new content:', error);
+            }
+        }
+
+        // Set interval to check for new content every X millis
+        setInterval(checkForNewContent, {{ youtube_cooldown }});
+
+        // Optionally, check for new content when the page loads
+        // checkForNewContent();
+    </script>
+{% endblock %}

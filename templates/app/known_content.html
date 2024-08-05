@@ -10,14 +10,14 @@
       <table class="table table-hover">
         <thead>
         <tr>
-          <th>Content ID</th>
+          <th>ID</th>
           <th>Content Title</th>
         </tr>
         </thead>
         <tbody>
         {% for content in page_obj %}
         <tr>
-          <td>{{ content.id }}</td>
+          <td><a target="_blank" href="/admin/app/contentmodel/{{ content.id }}/change/">Edit</a></td>
           {% if content.title %}
           <td><a target="_blank" href="{{ content.link }}" >{{ content.title }}</a></td>
           {% else %}

@@ -28,7 +28,7 @@ class NewContentView(TemplateView):
         blocked_channels = HighlightModel.objects.values_list('channel_id', flat=True)
 
         # Get the list of content IDs and platforms to filter out
-        existing_content_ids = ContentModel.objects.filter(platform='youtube').values_list('content_id', flat=True)
+        existing_content_ids = ContentModel.objects.filter(platform='YOUTUBE').values_list('content_id', flat=True)
 
         # Filter out the videos from the blocked channels and those already in ContentModel
         filtered_videos = [

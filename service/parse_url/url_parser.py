@@ -13,20 +13,22 @@ class UrlParser:
         domain_parts = parsed_url.netloc.split('.')
 
         if len(domain_parts) > 1:
-            return domain_parts[-2]
+            if domain_parts[-2] == "youtu":
+                return "YOUTUBE"
+            return domain_parts[-2].upper()
         raise ValueError("Domain should contain at least 2 parts")
 
     @staticmethod
     def get_content_id(url: str) -> str:
         """"""
         platform: str = UrlParser.get_platform(url)
-        if platform == "x":
+        if platform == "X":
             return UrlParser._get_x_content_id(url)
-        elif platform in ["youtube", "youtu"]:
+        elif platform == "YOUTUBE":
             return UrlParser._get_youtube_content_id(url)
-        elif platform == "instagram":
+        elif platform == "INSTAGRAM":
             return UrlParser._get_instagram_content_id(url)
-        elif platform == "tiktok":
+        elif platform == "TIKTOk":
             return UrlParser._get_tiktok_content_id(url)
         else:
             raise ValueError(f"Unknown platform {platform}")
