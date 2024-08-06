@@ -39,7 +39,7 @@
                     <div class="input-group-prepend">
                     <span class="input-group-text" id="contentId">Content ID:</span>
                     </div>
-                    <input type="text" value="{{ entity.video_id }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" value="{{ entity.video_id }}" class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
                 </div>
 
                 <div class="input-group input-group-sm mb-3">
@@ -55,13 +55,13 @@
                 <p class="">{{ entity.published_at|time_since }}</p>
             </div>
             <div class="card-footer bg-transparent border-dark d-flex justify-content-between">
-                <form method="POST" action="/mark/highlighter">
+                <form id="highlighterForm" >
                     {% csrf_token %}
-                    <input type="hidden" value="{{ entity.channel_id }}" class="form-control" name="channel-id">
-                    <input type="hidden" value="{{ entity.channel_title }}" class="form-control" name="channel-title">
-                    <input type="hidden" value="{{ entity.published_at }}" class="form-control" name="published-at">
+                    <input type="hidden" value="{{ entity.channel_id }}" class="form-control" name="channel_id">
+                    <input type="hidden" value="{{ entity.channel_title }}" class="form-control" name="channel_title">
+                    <!-- <input type="hidden" value="{{ entity.published_at }}" class="form-control" name="published_at"> -->
                     <input type="hidden" value="Quick marker as highlighter" class="form-control" name="reason">
-                    <button type="button" class="btn btn-primary">Mark as Highlighter</button>
+                    <button onclick="submitHighlighterForm()" type="button" class="btn btn-primary">Mark as Highlighter</button>
                 </form>
 
                 <button type="button" class="btn btn-dark text-right">Add to Rejected</button>
