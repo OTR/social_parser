@@ -1,4 +1,11 @@
-""""""
+"""
+duration
+
+any — не фильтровать результаты поиска видео по их продолжительности. Это значение по умолчанию.
+long — включайте только видео продолжительностью более 20 минут.
+medium – включать только видео продолжительностью от четырех до 20 минут (включительно).
+short – включайте только видео продолжительностью менее четырех минут.
+"""
 import os
 from pathlib import Path
 
@@ -30,7 +37,13 @@ class YoutubeApiClient:
             developerKey=self.YOUTUBE_DATA_API_V3_KEY
         )
 
-    def get_latest_videos(self, keyword=None, max_results=50, page_token="") -> YoutubeDTO:
+    def get_latest_videos(
+            self,
+            keyword=None,
+            max_results=50,
+            page_token="",
+            duration="any"
+    ) -> YoutubeDTO:
         """"""
         query: str = keyword if keyword is not None else self.DEFAULT_KEYWORD
         try:
@@ -39,7 +52,7 @@ class YoutubeApiClient:
                 order="date",
                 type="video",
                 safeSearch="none",
-                videoDuration="any",
+                videoDuration=duration,
                 regionCode="RU",
                 part="id, snippet",
                 maxResults=max_results,
