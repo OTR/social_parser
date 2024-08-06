@@ -46,3 +46,10 @@ TODO
 # Project Structure
 
 ...
+
+# Dump rows from database tables with bash script
+
+```bash
+chmod +x ./samples/dump_data_as_json.sh
+./samples/dump_data_as_json.sh
+```

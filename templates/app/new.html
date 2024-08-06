@@ -6,62 +6,70 @@
       {% if youtube_dto.entities %}
       {% for entity in youtube_dto.entities %}
 
-          <div class="row">
-            <div class="col-12">
-                <div class="card border-dark mb-3" style="max-width: 64rem;">
-                <div class="card-header">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseVideo{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample{{ forloop.counter }}">
-                     {{ entity.title }}
-                     </button>
+      <div class="row">
+        <div class="col-12">
+            <div class="card border-dark mb-3" style="max-width: 64rem;">
+            <div class="card-header">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseVideo{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample{{ forloop.counter }}">
+                 {{ entity.title }}
+                 </button>
+            </div>
+
+            <div class="card-body text-dark">
+                <div class="embed-responsive embed-responsive-16by9 collapse multi-collapse" id="collapseVideo{{ forloop.counter }}" data-video-id="{{ entity.video_id }}">
+                   <!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ entity.video_id }}?rel=0" allowfullscreen></iframe> -->
+                </div>
+                <pre></pre>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="sizing-sm">Channel name:</span>
+                    </div>
+                    <input type="text" value="{{ entity.channel_title }}" class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
                 </div>
 
-                <div class="card-body text-dark">
-                    <div class="embed-responsive embed-responsive-16by9 collapse multi-collapse" id="collapseVideo{{ forloop.counter }}" data-video-id="{{ entity.video_id }}">
-                       <!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ entity.video_id }}?rel=0" allowfullscreen></iframe> -->
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="videoTitle">Video title:</span>
                     </div>
-                    <pre></pre>
-
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                        <span class="input-group-text" id="sizing-sm">Channel name:</span>
-                        </div>
-                        <input type="text" value="{{ entity.channel_title }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                        <span class="input-group-text" id="sizing-sm">Video title:</span>
-                        </div>
-                        <input type="text" value="{{ entity.title }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                        <span class="input-group-text" id="contentId">Content ID:</span>
-                        </div>
-                        <input type="text" value="{{ entity.video_id }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Channel ID:</span>
-                        </div>
-                        <input type="text" value="{{ entity.channel_id }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-
-                    <p class="card-text">Video description: {{ entity.description }}</p>
-                    <!-- https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#date -->
-                    <p class="">Published at: {{ entity.published_at|date:"d.m.Y H:i:s" }}</p>
-                    <p class="">{{ entity.published_at|time_since }}</p>
+                    <input type="text" value="{{ entity.title }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
                 </div>
-                <div class="card-footer bg-transparent border-dark d-flex justify-content-between">
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="contentId">Content ID:</span>
+                    </div>
+                    <input type="text" value="{{ entity.video_id }}"class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Channel ID:</span>
+                    </div>
+                    <input type="text" value="{{ entity.channel_id }}" class="form-control" aria-label="Channel ID" aria-describedby="inputGroup-sizing-sm">
+                </div>
+
+                <p class="card-text">Video description: {{ entity.description }}</p>
+                <!-- https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#date -->
+                <p class="">Published at: {{ entity.published_at|date:"d.m.Y H:i:s" }}</p>
+                <p class="">{{ entity.published_at|time_since }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-dark d-flex justify-content-between">
+                <form method="POST" action="/mark/highlighter">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ entity.channel_id }}" class="form-control" name="channel-id">
+                    <input type="hidden" value="{{ entity.channel_title }}" class="form-control" name="channel-title">
+                    <input type="hidden" value="{{ entity.published_at }}" class="form-control" name="published-at">
+                    <input type="hidden" value="Quick marker as highlighter" class="form-control" name="reason">
                     <button type="button" class="btn btn-primary">Mark as Highlighter</button>
-                    <button type="button" class="btn btn-dark text-right">Add to Rejected</button>
-                </div>
-            </div>
+                </form>
 
+                <button type="button" class="btn btn-dark text-right">Add to Rejected</button>
             </div>
-          </div>
+        </div>
+
+        </div>
+      </div>
       {% endfor %}
       {% endif %}
 
