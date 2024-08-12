@@ -30,8 +30,8 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function submitHighlighterForm() {
-    const form = document.getElementById('highlighterForm');
+function submitHighlighterForm(formId) {
+    const form = document.getElementById(formId);
     const formData = new FormData(form);
     const csrftoken = getCookie('csrftoken');
 
@@ -48,13 +48,33 @@ function submitHighlighterForm() {
             reason: formData.get('reason')
         })
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            console.log('Marked as highlighter successfully!');
+    .then(response => {
+        if (response.status === 201) {
+            return response.json();
         } else {
-            console.log('Failed to mark as highlighter');
+            throw new Error('Failed to mark as highlighter');
         }
     })
-    .catch(error => console.error('Error:', error));
+    .then(data => {
+        const notificationContainer = document.getElementById('notificationContainer');
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-success alert-dismissible fade show';
+        alert.role = 'alert';
+        alert.innerHTML = `
+            ${data.channel_title} Marked as highlighter successfully!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        notificationContainer.appendChild(alert);
+    })
+    .catch(error => {
+        const notificationContainer = document.getElementById('notificationContainer');
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-danger alert-dismissible fade show';
+        alert.role = 'alert';
+        alert.innerHTML = `
+            ${error.message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        notificationContainer.appendChild(alert);
+    });
 }
