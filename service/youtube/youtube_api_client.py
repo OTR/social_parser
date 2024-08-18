@@ -16,8 +16,12 @@ from googleapiclient.errors import HttpError
 from service.youtube.youtube_dto import YoutubeDTO
 from service.youtube.video_dto import VideoDTO
 from service.youtube.youtube_mapper import YoutubeMapper
+from service.youtube.comment_dto import CommentDTO
+from service.youtube.comment_mapper import CommentMapper
 
-load_dotenv(Path(__file__).parent.parent.parent / "python_anywhere.env")
+
+PATH_TO_ENVIRONMENT_VARIABLES = Path(__file__).parent.parent.parent / "python_anywhere.env"
+load_dotenv(PATH_TO_ENVIRONMENT_VARIABLES)
 
 
 class YoutubeApiClient:
@@ -38,11 +42,11 @@ class YoutubeApiClient:
         )
 
     def get_latest_videos(
-            self,
-            keyword=None,
-            max_results=50,
-            page_token="",
-            duration="any"
+        self,
+        keyword=None,
+        max_results=50,
+        page_token="",
+        duration="any"
     ) -> YoutubeDTO:
         """"""
         query: str = keyword if keyword is not None else self.DEFAULT_KEYWORD
@@ -74,5 +78,42 @@ class YoutubeApiClient:
         return YoutubeDTO(
             next_page_token=next_page_token,
             prev_page_token=prev_page_token,
+            entities=dtos
+        )
+
+    def get_comments_to_video(
+        self,
+        video_id,
+        max_results=100,
+        moderation_status="published",
+        order="time",
+        text_format="plainText",
+        page_token=""
+    ) -> YoutubeDTO:
+        """"""
+        try:
+            search_response: dict = self.youtube_object.commentThreads().list(
+                part="snippet,id",
+                maxResults=max_results,
+                moderationStatus=moderation_status,
+                order=order,
+                textFormat=text_format,
+                videoId=video_id,
+                pageToken=page_token
+            ).execute()
+        except HttpError as err:
+            if err.status_code == 403 and err.reason == YoutubeApiClient.QUOTA_REASON:
+                # TODO LOGGING
+                print("Quota exceeded")
+            search_response = {}
+        next_page_token: str = search_response.get("nextPageToken", "")
+        entities: list = search_response.get("items", [])
+        dtos: list[CommentDTO] = []
+        for entity in entities:
+            dtos.append(CommentMapper.to_dto(entity))
+
+        return YoutubeDTO(
+            next_page_token=next_page_token,
+            prev_page_token="",
             entities=dtos
         )

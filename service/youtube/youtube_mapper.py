@@ -16,16 +16,18 @@ class YoutubeMapper:
     def to_dto(entity: dict) -> VideoDTO:
         """"""
         offset = int(os.getenv("TIMEZONE_OFFSET"))
-        title: str = entity["snippet"]["title"]
-        _published_at: str = entity["snippet"]["publishedAt"]
         _datetime_format: str = "%Y-%m-%dT%H:%M:%SZ"
-        published_at: datetime = datetime.strptime(_published_at, _datetime_format)
-        published_at_with_tz = published_at + timedelta(hours=offset)
+
+        title: str = entity["snippet"]["title"]
         channel_title: str = entity["snippet"]["channelTitle"]
         channel_id: str = entity["snippet"]["channelId"]
         video_id: str = entity["id"]["videoId"]
         description: str = entity['snippet']['description']
         thumbnail_url: str = entity['snippet']['thumbnails']['default']['url']
+
+        _published_at: str = entity["snippet"]["publishedAt"]
+        published_at: datetime = datetime.strptime(_published_at, _datetime_format)
+        published_at_with_tz = published_at + timedelta(hours=offset)
 
         return VideoDTO(
             title=title,
