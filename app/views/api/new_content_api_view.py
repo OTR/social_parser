@@ -29,6 +29,9 @@ class NewContentApiView(APIView):
         has_new_content: bool = len(filtered_videos) > 0
 
         return Response(
-            {"has_new_content": has_new_content},
+            {
+                "data": [filtered_videos],
+                "has_new_content": has_new_content
+            },
             status=status.HTTP_200_OK
         )

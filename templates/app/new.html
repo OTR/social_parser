@@ -3,10 +3,10 @@
 {% load custom_filters %}
 <div class="container">
       {% if youtube_dto %}
-      {% if youtube_dto.entities %}
-      {% for entity in youtube_dto.entities %}
+          {% if youtube_dto.entities %}
+              {% for entity in youtube_dto.entities %}
 
-      <div class="row">
+                  <div class="row">
         <div class="col-12">
             <div class="card border-dark mb-3" style="max-width: 64rem;">
             <div class="card-header">
@@ -72,11 +72,13 @@
 
         </div>
       </div>
-      {% endfor %}
-      {% endif %}
 
-      {% if youtube_dto.next_page_token %}
-      <div class="row">
+              {% endfor %}
+          {% endif %}
+
+           {% if youtube_dto.next_page_token %}
+
+               <div class="row">
         <div class="col-12">
         <ul class="pagination pagination-lg justify-content-center pg-dark">
             {# Previous page block #}
@@ -103,7 +105,8 @@
         </ul>
         </div>
       </div>
-      {% endif %}
+
+           {% endif %}
       {% endif %}
 </div>
 <script>
