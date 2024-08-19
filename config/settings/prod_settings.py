@@ -6,10 +6,13 @@ See: https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 """
 import os
 
+from dotenv import load_dotenv
 from django.core.exceptions import ImproperlyConfigured
 
 from config.settings.common_settings import *
 
+PATH_TO_ENVIRONMENT_VARIABLES = Path(__file__).parent.parent.parent / "python_anywhere.env"
+load_dotenv(PATH_TO_ENVIRONMENT_VARIABLES)
 
 def change_it() -> None:
     """
