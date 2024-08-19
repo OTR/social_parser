@@ -30,7 +30,7 @@ class NewContentApiView(APIView):
 
         return Response(
             {
-                "data": [filtered_videos],
+                "data": [],
                 "has_new_content": has_new_content
             },
             status=status.HTTP_200_OK
