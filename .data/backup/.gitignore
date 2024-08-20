@@ -1,2 +1,4 @@
 !.gitignore
+!highlighters_latest.json
+!targets_latest.json
 *
