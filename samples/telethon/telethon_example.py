@@ -1,52 +1,33 @@
 import asyncio
-from telethon import TelegramClient, events
-import time
+import os
 
-# Replace with your own API ID, hash, and phone number
-api_id = '22078968'
-api_hash = 'ce5c35622ee371bc3e988d5eef06ecd7'
-phone_number = '+996228906143'
+from telethon import TelegramClient
+from telethon.tl.types import PeerChat
+from dotenv import load_dotenv
 
-youtube_api_key = 'YOUR_YOUTUBE_API_KEY'
-# channel_id = '-1002230341917'
-telegram_channel = '-1002230341917'
+load_dotenv()
+api_id = os.getenv("TELEGRAM_API_ID")
+api_hash = os.getenv("TELEGRAM_API_HASH")
+phone_number = os.getenv("TELEGRAM_PHONE")
 
-"""
-async def fetch_youtube_data():
-    async with aiohttp.ClientSession() as session:
-        youtube_api_url = f"https://www.googleapis.com/youtube/v3/channels?part=statistics&id={channel_id}&key={youtube_api_key}"
-        async with session.get(youtube_api_url) as response:
-            if response.status == 200:
-                data = await response.json()
-                return data
-            else:
-                print(f"Failed to fetch YouTube data: {response.status}")
-                return None
-"""
+telegram_group_id = 4565496718
+
+client = TelegramClient('session_name', api_id, api_hash)
+
 
 async def send_youtube_stats():
-    while True:
-        data = True # await fetch_youtube_data()
-        if data:
-            stats = data['items'][0]['statistics']
-            message = (f"Channel Stats:\n"
-                       f"Subscribers: {stats['subscriberCount']}\n"
-                       f"Views: {stats['viewCount']}\n"
-                       f"Videos: {stats['videoCount']}")
-            await client.send_message(telegram_channel, message)
-            print("Message sent successfully!")
+    await asyncio.sleep(10)
+    chat_entity = await client.get_entity(PeerChat(telegram_group_id))
 
-        await asyncio.sleep(600)  # Wait for 10 minutes (600 seconds)
+    while True:
+        user_input = input("Enter message: ")
+        await client.send_message(chat_entity, user_input)
+        print("Message sent successfully!")
 
 
 async def main():
-    client = TelegramClient('session_name', api_id, api_hash)
-    client.start(phone=phone_number)
-
-    # Run the send_youtube_stats task in the background
+    await client.start(phone=phone_number)
     asyncio.create_task(send_youtube_stats())
-
-    # Keep the Telegram client running indefinitely
     async with client:
         await client.run_until_disconnected()
 
