@@ -7,7 +7,7 @@ from time import sleep
 django.setup()
 
 from data.youtube.youtube_api_client import YoutubeApiClient
-from data.youtube.youtube_mapper import YoutubeMapper
+from data.youtube.video_mapper import VideoMapper
 from app.models.content import ContentModel
 from app.models.highlight import HighlightModel
 from app.models.content_platform import ContentPlatform
@@ -42,7 +42,7 @@ def send_youtube_stats():
             if
             video.channel_id not in blocked_channels and video.video_id not in existing_content_ids
         ]
-        response = "\n".join(map(YoutubeMapper.dto_to_text, filtered_videos))
+        response = "\n".join(map(VideoMapper.dto_to_text, filtered_videos))
         print(len(filtered_videos))
         sleep(300)
 

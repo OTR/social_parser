@@ -3,7 +3,7 @@ from use_case.base_youtube_use_case import BaseYoutubeUseCase
 from data.youtube.youtube_api_client import YoutubeApiClient
 
 
-class GetLongYoutubeVideosUseCase(BaseYoutubeUseCase):
+class GetAnyYoutubeVideosUseCase(BaseYoutubeUseCase):
     """"""
 
     def __init__(self):

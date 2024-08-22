@@ -4,16 +4,18 @@ from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
 
+from app.models.content import ContentModel
 from data.youtube.video_dto import VideoDTO
+from domain.entity.youtube_video import YoutubeVideo
 
 load_dotenv()
 
 
-class YoutubeMapper:
+class VideoMapper:
     """"""
 
     @staticmethod
-    def to_dto(entity: dict) -> VideoDTO:
+    def json_to_dto(entity: dict) -> VideoDTO:
         """"""
         offset = int(os.getenv("TIMEZONE_OFFSET"))
         _datetime_format: str = "%Y-%m-%dT%H:%M:%SZ"
@@ -48,3 +50,22 @@ class YoutubeMapper:
         video_id = dto.video_id
         youtube_url = "https://youtube.com/watch=v?" + str(video_id)
         return f"{title}\n{channel_title}\n{youtube_url}\n"
+
+    @staticmethod
+    def dbo_to_entity(dbo: ContentModel) -> YoutubeVideo:
+        """"""
+        title = dbo.title
+        published_at: datetime = None
+        channel_id: str = None
+        channel_title: str = None
+        video_id: str = None
+        description: str = None
+
+        return YoutubeVideo(
+            title="",
+            published_at=datetime.now(),
+            channel_id=",",
+            channel_title="",
+            video_id="",
+            description=""
+        )

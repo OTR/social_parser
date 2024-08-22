@@ -15,7 +15,7 @@ from googleapiclient.errors import HttpError
 
 from data.youtube.youtube_dto import YoutubeDTO
 from data.youtube.video_dto import VideoDTO
-from data.youtube.youtube_mapper import YoutubeMapper
+from data.youtube.video_mapper import VideoMapper
 from data.youtube.comment_dto import CommentDTO
 from data.youtube.comment_mapper import CommentMapper
 
@@ -75,7 +75,7 @@ class YoutubeApiClient:
         entities: list = search_response.get("items", [])
         dtos: list[VideoDTO] = []
         for entity in entities:
-            dtos.append(YoutubeMapper.to_dto(entity))
+            dtos.append(VideoMapper.json_to_dto(entity))
 
         return YoutubeDTO(
             next_page_token=next_page_token,

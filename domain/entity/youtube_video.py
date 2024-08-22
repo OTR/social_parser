@@ -4,7 +4,14 @@ from datetime import datetime
 
 @dataclass
 class YoutubeVideo:
-    """"""
+    """
+    title: str
+    published_at: datetime
+    channel_id: str
+    channel_title: str
+    video_id: str
+    description: str
+    """
     title: str
     published_at: datetime
     channel_id: str
