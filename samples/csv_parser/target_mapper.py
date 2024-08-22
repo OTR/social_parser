@@ -2,7 +2,7 @@
 from typing import Optional
 
 from samples.csv_parser.psyop_target_dto import PsyOpTargetDTO
-from service.parse_url.url_parser import UrlParser
+from data.parse_url.url_parser import UrlParser
 
 
 class TargetMapper:
