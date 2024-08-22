@@ -6,7 +6,7 @@ from telethon.tl.types import PeerChat
 from dotenv import load_dotenv
 
 load_dotenv()
-api_id = os.getenv("TELEGRAM_API_ID")
+api_id = int(os.getenv("TELEGRAM_API_ID"))
 api_hash = os.getenv("TELEGRAM_API_HASH")
 phone_number = os.getenv("TELEGRAM_PHONE")
 
