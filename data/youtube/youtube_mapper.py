@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
 
-from service.youtube.video_dto import VideoDTO
+from data.youtube.video_dto import VideoDTO
 
 load_dotenv()
 

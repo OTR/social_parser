@@ -13,11 +13,11 @@ from dotenv import load_dotenv
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from service.youtube.youtube_dto import YoutubeDTO
-from service.youtube.video_dto import VideoDTO
-from service.youtube.youtube_mapper import YoutubeMapper
-from service.youtube.comment_dto import CommentDTO
-from service.youtube.comment_mapper import CommentMapper
+from data.youtube.youtube_dto import YoutubeDTO
+from data.youtube.video_dto import VideoDTO
+from data.youtube.youtube_mapper import YoutubeMapper
+from data.youtube.comment_dto import CommentDTO
+from data.youtube.comment_mapper import CommentMapper
 
 PATH_TO_ENVIRONMENT_VARIABLES = Path(__file__).parent.parent.parent / "python_anywhere.env"
 load_dotenv(PATH_TO_ENVIRONMENT_VARIABLES)

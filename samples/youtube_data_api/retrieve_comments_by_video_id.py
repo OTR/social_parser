@@ -1,5 +1,5 @@
 """"""
-from service.youtube.youtube_api_client import YoutubeApiClient
+from data.youtube.youtube_api_client import YoutubeApiClient
 
 
 def main(video_id: str):

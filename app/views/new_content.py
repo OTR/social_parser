@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 from app.models.highlight import HighlightModel
 from app.models.content import ContentModel
-from service.youtube import YoutubeApiClient
+from data.youtube.youtube_api_client import YoutubeApiClient
 
 
 class NewContentView(TemplateView):

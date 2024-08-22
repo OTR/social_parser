@@ -28,7 +28,7 @@ class UrlParser:
             return UrlParser._get_youtube_content_id(url)
         elif platform == "INSTAGRAM":
             return UrlParser._get_instagram_content_id(url)
-        elif platform == "TIKTOk":
+        elif platform == "TIKTOK":
             return UrlParser._get_tiktok_content_id(url)
         else:
             raise ValueError(f"Unknown platform {platform}")

@@ -6,8 +6,8 @@ import django
 from time import sleep
 django.setup()
 
-from service.youtube.youtube_api_client import YoutubeApiClient
-from service.youtube.youtube_mapper import YoutubeMapper
+from data.youtube.youtube_api_client import YoutubeApiClient
+from data.youtube.youtube_mapper import YoutubeMapper
 from app.models.content import ContentModel
 from app.models.highlight import HighlightModel
 from app.models.content_platform import ContentPlatform

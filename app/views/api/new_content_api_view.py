@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from service.youtube import YoutubeApiClient
+from data.youtube.youtube_api_client import YoutubeApiClient
 from app.models import HighlightModel, ContentModel
 from app.models.content_platform import ContentPlatform
 

@@ -1,6 +1,6 @@
 from domain.entity.youtube_video import YoutubeVideo
 from use_case.base_youtube_use_case import BaseYoutubeUseCase
-from service.youtube.youtube_api_client import YoutubeApiClient
+from data.youtube.youtube_api_client import YoutubeApiClient
 
 
 class GetShortYoutubeVideosUseCase(BaseYoutubeUseCase):
