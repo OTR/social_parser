@@ -4,7 +4,10 @@ Social network monitoring tool
  
 # Installation
 
-...
+1. `git clone git@github.com:NikLeonov/parser_makaron.git`
+2. `pip3 install poetry`
+3. `cp python_anywhere.env.example python_anywhere.env`
+4. ``
 
 # Run locally
 

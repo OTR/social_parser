@@ -13,7 +13,7 @@ U_LOGIN = os.environ.get("U_LOGIN")
 U_HOST = os.environ.get("U_HOST")
 U_DB_PASSWD = os.environ.get("U_DB_PASSWD")
 # MySQL table name, creates on a dashboard
-U_TABLE_NAME = "test_targets"
+U_TABLE_NAME = "botdb"
 
 ALLOWED_HOSTS = ["127.0.0.1"]
 
