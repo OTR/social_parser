@@ -38,3 +38,13 @@ class YoutubeMapper:
             description=description,
             thumbnail_url=thumbnail_url
         )
+
+    @staticmethod
+    def dto_to_text(dto: VideoDTO) -> str:
+        """"""
+        title = dto.title
+        published_at = dto.published_at
+        channel_title = dto.channel_title
+        video_id = dto.video_id
+        youtube_url = "https://youtube.com/watch=v?" + str(video_id)
+        return f"{title}\n{channel_title}\n{youtube_url}\n"
