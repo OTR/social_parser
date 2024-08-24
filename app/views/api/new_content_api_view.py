@@ -5,7 +5,7 @@ from rest_framework import status
 
 from data.youtube.youtube_api_client import YoutubeApiClient
 from app.models import HighlightModel, ContentModel
-from app.models.content_platform import ContentPlatform
+from domain.vo.content_platform import ContentPlatform
 
 
 class NewContentApiView(APIView):

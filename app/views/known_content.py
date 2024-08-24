@@ -2,7 +2,7 @@
 from django.views.generic import ListView
 
 from app.models import ContentModel
-from app.models.content_status import ContentStatus
+from domain.vo.content_status import ContentStatus
 
 
 class KnownContentView(ListView):

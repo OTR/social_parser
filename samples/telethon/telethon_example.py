@@ -10,7 +10,7 @@ from data.youtube.youtube_api_client import YoutubeApiClient
 from data.youtube.video_mapper import VideoMapper
 from app.models.content import ContentModel
 from app.models.highlight import HighlightModel
-from app.models.content_platform import ContentPlatform
+from domain.vo.content_platform import ContentPlatform
 
 from telethon import TelegramClient
 from telethon.tl.types import PeerChat
@@ -42,7 +42,7 @@ def send_youtube_stats():
             if
             video.channel_id not in blocked_channels and video.video_id not in existing_content_ids
         ]
-        response = "\n".join(map(VideoMapper.dto_to_text, filtered_videos))
+        response = "\n".join(map(VideoMapper.entity_to_text, filtered_videos))
         print(len(filtered_videos))
         sleep(300)
 
