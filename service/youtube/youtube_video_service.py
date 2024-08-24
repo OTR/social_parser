@@ -17,7 +17,7 @@ class YoutubeVideoService:
 
     def get_not_labeled_youtube_videos(self):
         """"""
-        youtube_dto = youtubeClient.get_latest_videos()
+        youtube_dto = self.get_any_youtube_videos_use_case.get_videos()
         blocked_channels = HighlightModel.objects.values_list('channel_id', flat=True)
         existing_content_ids = (ContentModel.objects
                                 .filter(platform=ContentPlatform.YOUTUBE.value)

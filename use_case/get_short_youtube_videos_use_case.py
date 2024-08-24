@@ -7,7 +7,7 @@ class GetShortYoutubeVideosUseCase(BaseYoutubeUseCase):
     """"""
 
     def __init__(self):
-        self.youtube_api_client = YoutubeApiClient()
+        self._youtube_api_client = YoutubeApiClient()
 
     def get_videos(self) -> list[YoutubeVideo]:
-        self.youtube_api_client.get_latest_videos(duration="short")
+        self._youtube_api_client.get_latest_videos(duration="short")
