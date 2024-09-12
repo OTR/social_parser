@@ -78,3 +78,56 @@ function submitHighlighterForm(formId) {
         notificationContainer.appendChild(alert);
     });
 }
+
+function submitRejectedForm(formId) {
+    const form = document.getElementById(formId);
+    const formData = new FormData(form);
+    const csrftoken = getCookie('csrftoken');
+    const datetime = formData.get('published_at');
+    console.log(datetime);
+
+    fetch('/api/add/rejected/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            title: formData.get('title'),
+            published_at: formData.get('published_at'),
+            channel_title: formData.get('channel_title'),
+            video_id: formData.get('video_id'),
+            description: formData.get('description'),
+            reason: formData.get('reason')
+        })
+    })
+    .then(response => {
+        if (response.status === 201) {
+            return response.json();
+        } else {
+            throw new Error('Failed to add to Rejected');
+        }
+    })
+    .then(data => {
+        const notificationContainer = document.getElementById('notificationContainer');
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-success alert-dismissible fade show';
+        alert.role = 'alert';
+        alert.innerHTML = `
+            ${data.channel_title} Marked as highlighter successfully!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        notificationContainer.appendChild(alert);
+    })
+    .catch(error => {
+        const notificationContainer = document.getElementById('notificationContainer');
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-danger alert-dismissible fade show';
+        alert.role = 'alert';
+        alert.innerHTML = `
+            ${error.message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        notificationContainer.appendChild(alert);
+    });
+}

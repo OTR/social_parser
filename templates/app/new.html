@@ -55,18 +55,31 @@
                 <p class="">{{ entity.published_at|time_since }}</p>
             </div>
 
-            <!--- Mark as highlighter form --->
+
             <div class="card-footer bg-transparent border-dark d-flex justify-content-between">
+                <!--- Mark as highlighter form --->
                 <form id="highlighterForm{{ forloop.counter }}" >
                     {% csrf_token %}
                     <input type="hidden" value="{{ entity.channel_id }}" class="form-control" name="channel_id">
                     <input type="hidden" value="{{ entity.channel_title }}" class="form-control" name="channel_title">
                     <!-- <input type="hidden" value="{{ entity.published_at }}" class="form-control" name="published_at"> -->
-                    <input type="hidden" value="Quick marker as highlighter" class="form-control" name="reason">
+                    <input type="hidden" value="Quick marked as highlighter" class="form-control" name="reason">
                     <button onclick="submitHighlighterForm('highlighterForm{{ forloop.counter }}')" type="button" class="btn btn-primary">Mark as Highlighter</button>
                 </form>
 
-                <button type="button" class="btn btn-dark text-right">Add to Rejected</button>
+                <!--- Add to Rejected form --->
+                <form id="rejectedForm{{ forloop.counter }}" >
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ entity.title }}" class="form-control" name="title">
+<!--                    <input type="hidden" value='{{ entity.published_at|date:"d.m.Y H:i:s" }}' class="form-control" name="published_at">-->
+                    <input type="hidden" value='{{ entity.published_at|date:"Y-m-d\TH:i:s" }}' class="form-control" name="published_at">
+                    <input type="hidden" value="{{ entity.channel_title }}" class="form-control" name="channel_title">
+                    <input type="hidden" value="{{ entity.video_id }}" class="form-control" name="video_id">
+                    <input type="hidden" value="{{ entity.description }}" class="form-control" name="description">
+                    <input type="hidden" value="Quick marked as rejected" class="form-control" name="reason">
+                    <button onclick="submitRejectedForm('rejectedForm{{ forloop.counter }}')" type="button" class="btn btn-primary">Add to Rejected</button>
+                </form>
+
             </div>
         </div>
 

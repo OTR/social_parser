@@ -3,7 +3,9 @@ from django.views.generic import TemplateView
 
 from app.models.highlight import HighlightModel
 from app.models.content import ContentModel
+from data.youtube.video_dto import VideoDTO
 from data.youtube.youtube_api_client import YoutubeApiClient
+from data.youtube.youtube_dto import YoutubeDTO
 
 
 class NewContentView(TemplateView):
@@ -25,7 +27,8 @@ class NewContentView(TemplateView):
         elif next_page_token is None and prev_page_token is not None:
             page_token = prev_page_token
 
-        youtube_dto = YoutubeApiClient().get_latest_videos(
+        # TODO: replace the following with call to Youtube Service
+        youtube_dto: YoutubeDTO = YoutubeApiClient().get_latest_videos(
             page_token=page_token,
             duration=duration
         )
@@ -37,7 +40,7 @@ class NewContentView(TemplateView):
         existing_content_ids = ContentModel.objects.filter(platform='YOUTUBE').values_list('content_id', flat=True)
 
         # Filter out the videos from the blocked channels and those already in ContentModel
-        filtered_videos = [
+        filtered_videos: list[VideoDTO] = [
             video for video in youtube_dto.entities
             if video.channel_id not in blocked_channels and video.video_id not in existing_content_ids
         ]

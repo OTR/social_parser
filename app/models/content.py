@@ -9,6 +9,7 @@ seized_top
 """
 from django.db import models
 from django.utils import timezone
+
 from domain.vo.content_status import ContentStatus
 from domain.vo.content_platform import ContentPlatform
 
@@ -53,9 +54,9 @@ class ContentModel(models.Model):
     def __str__(self):
         """Redefine string representation of a table row in admin site"""
         string_repr: str = ""
-        if is_not_blank(self.title):
+        if is_not_blank(str(self.title)):
             string_repr = str(self.title)
-        elif is_not_blank(self.username) or is_not_blank(self.reason):
+        elif is_not_blank(str(self.username)) or is_not_blank(str(self.reason)):
             string_repr = f"{self.username} {self.reason}"
         else:
             string_repr = str(self.link)
