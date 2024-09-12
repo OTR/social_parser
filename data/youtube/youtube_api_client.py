@@ -8,6 +8,7 @@ short – включайте только видео продолжительн�
 """
 import os
 from pathlib import Path
+from ssl import SSLEOFError
 
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
@@ -68,6 +69,8 @@ class YoutubeApiClient:
             if err.status_code == 403 and err.reason == YoutubeApiClient._QUOTA_REASON:
                 # TODO LOGGING
                 print("Quota exceeded")
+        except SSLEOFError as err:
+
 
             search_response = {}
         next_page_token: str = search_response.get("nextPageToken", "")
