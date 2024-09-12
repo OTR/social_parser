@@ -1,8 +1,14 @@
+import asyncio
 import os
+from pathlib import Path
+from dotenv import load_dotenv
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.test_settings")
+load_dotenv(Path(__file__).parent.parent.parent / "python_anywhere.env")
+DEFAULT_DJANGO_SETTINGS = os.getenv("DEFAULT_DJANGO_SETTINGS")
+from service.youtube.youtube_video_service import YoutubeVideoService
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", DEFAULT_DJANGO_SETTINGS)
 import django
-from time import sleep
 django.setup()
 
 from data.youtube.youtube_api_client import YoutubeApiClient
@@ -13,28 +19,16 @@ from domain.vo.content_platform import ContentPlatform
 
 from telethon import TelegramClient
 from telethon.tl.types import PeerChat
-from dotenv import load_dotenv
 
-load_dotenv()
 api_id = int(os.getenv("TELEGRAM_API_ID"))
 api_hash = os.getenv("TELEGRAM_API_HASH")
 phone_number = os.getenv("TELEGRAM_PHONE")
 chat_id = int(os.getenv("TELEGRAM_ADMIN_GROUP_ID"))
 
-youtubeClient = YoutubeApiClient()
+youtubeVideoService = YoutubeVideoService()
 
 def get_videos():
-    youtube_dto = youtubeClient.get_latest_videos()
-    blocked_channels = HighlightModel.objects.values_list('channel_id', flat=True)
-    existing_content_ids = (ContentModel.objects
-                            .filter(platform=ContentPlatform.YOUTUBE.value)
-                            .values_list('content_id', flat=True))
-    filtered_dtos = [
-        video for video in youtube_dto.entities
-        if video.channel_id not in blocked_channels
-           and video.video_id not in existing_content_ids
-    ]
-    filtered_videos = map(VideoMapper.dto_to_entity, filtered_dtos)
+    filtered_videos = youtubeVideoService.get_not_labeled_youtube_videos()
     response = "\n".join(map(VideoMapper.entity_to_text, filtered_videos))
     return response
 
@@ -44,7 +38,7 @@ async def send_youtube_stats():
         while True:
             result = await client.loop.run_in_executor(None, get_videos)
             print(result)
-            sleep(300)
+            await asyncio.sleep(300)
 
 
 def main():
