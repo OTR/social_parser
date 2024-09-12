@@ -23,18 +23,31 @@ chat_id = int(os.getenv("TELEGRAM_ADMIN_GROUP_ID"))
 
 youtubeClient = YoutubeApiClient()
 
+def get_videos():
+    youtube_dto = youtubeClient.get_latest_videos()
+    blocked_channels = HighlightModel.objects.values_list('channel_id', flat=True)
+    existing_content_ids = (ContentModel.objects
+                            .filter(platform=ContentPlatform.YOUTUBE.value)
+                            .values_list('content_id', flat=True))
+    filtered_dtos = [
+        video for video in youtube_dto.entities
+        if video.channel_id not in blocked_channels
+           and video.video_id not in existing_content_ids
+    ]
+    filtered_videos = map(VideoMapper.dto_to_entity, filtered_dtos)
+    response = "\n".join(map(VideoMapper.entity_to_text, filtered_videos))
+    return response
 
 async def send_youtube_stats():
-    chat_entity = await client.get_entity(PeerChat(chat_id))
+        chat_entity = await client.get_entity(PeerChat(chat_id))
 
-    while True:
-        user_input = input("Enter message: ")
-        await client.send_message(chat_entity, user_input)
-        print("Message sent successfully!")
-        sleep(10)
+        while True:
+            result = await client.loop.run_in_executor(None, get_videos)
+            print(result)
+            sleep(300)
+
 
 def main():
-
     client.start(phone=phone_number)
     with client:
         client.loop.create_task(send_youtube_stats())

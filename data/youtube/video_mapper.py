@@ -65,6 +65,26 @@ class VideoMapper:
         return f"{title}\n{channel_title}\n{readable_published_at}\n{youtube_url}\n"
 
     @staticmethod
+    def dto_to_entity(dto: VideoDTO) -> YoutubeVideo:
+        """"""
+        title: str = dto.title
+        channel_id: str = dto.channel_id
+        published_at: datetime = dto.published_at
+        channel_title: str = dto.channel_title
+        video_id: str = dto.video_id
+        description: str = dto.description
+
+        return YoutubeVideo(
+            title=title,
+            published_at=published_at,
+            channel_id=channel_id,
+            channel_title=channel_title,
+            video_id=video_id,
+            description=description
+        )
+
+
+    @staticmethod
     def dbo_to_entity(dbo: ContentModel) -> YoutubeVideo:
         """"""
         title: str = dbo.title
