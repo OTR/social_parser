@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta
 import os
 
-from data.youtube.comment_dto import CommentDTO
+from data.youtube.dto.comment_dto import CommentDTO
 
 
 class CommentMapper:

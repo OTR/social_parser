@@ -13,7 +13,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", DEFAULT_DJANGO_SETTINGS)
 import django
 django.setup()
 
-from data.youtube.video_mapper import VideoMapper
+from data.youtube.mapper.video_mapper import VideoMapper
 
 from telethon import TelegramClient
 from telethon.tl.types import PeerChat
@@ -26,7 +26,7 @@ youtube_cooldown_in_minutes = int(os.getenv("YOUTUBE_COOLDOWN_IN_MINUTES"))
 youtube_video_service = YoutubeVideoService()
 
 def get_videos() -> str:
-    filtered_videos: list[YoutubeVideo] = youtube_video_service.get_not_labeled_youtube_videos()
+    filtered_videos: list[YoutubeVideo] = youtube_video_service.get_any_not_labeled_youtube_videos()
     response: str = "\n".join(map(VideoMapper.entity_to_text, filtered_videos))
     return response
 

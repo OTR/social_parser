@@ -5,7 +5,7 @@ import django
 django.setup()
 
 from app.models.content import ContentModel
-from data.youtube.video_mapper import VideoMapper
+from data.youtube.mapper.video_mapper import VideoMapper
 from domain.entity.youtube_video import YoutubeVideo
 from domain.vo.content_platform import ContentPlatform
 from repository.base_youtube_repository import BaseYoutubeRepository

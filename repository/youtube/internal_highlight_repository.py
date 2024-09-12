@@ -6,7 +6,7 @@ django.setup()
 
 from app.models.highlight import HighlightModel
 from domain.entity.youtube_channel import YoutubeChannel
-from data.youtube.channel_mapper import ChannelMapper
+from data.youtube.mapper.channel_mapper import ChannelMapper
 
 
 class InternalHighlightRepository:

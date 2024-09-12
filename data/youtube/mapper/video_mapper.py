@@ -2,12 +2,11 @@
 import os
 from pathlib import Path
 from datetime import datetime, timedelta
-from typing import Optional
 
 from dotenv import load_dotenv
 
 from app.models.content import ContentModel
-from data.youtube.video_dto import VideoDTO
+from data.youtube.dto.video_dto import VideoDTO
 from domain.entity.youtube_video import YoutubeVideo
 
 PATH_TO_ENVIRONMENT_VARIABLES = Path(__file__).parent.parent.parent / "python_anywhere.env"

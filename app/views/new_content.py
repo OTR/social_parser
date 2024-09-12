@@ -3,9 +3,9 @@ from django.views.generic import TemplateView
 
 from app.models.highlight import HighlightModel
 from app.models.content import ContentModel
-from data.youtube.video_dto import VideoDTO
+from data.youtube.dto.video_dto import VideoDTO
 from data.youtube.youtube_api_client import YoutubeApiClient
-from data.youtube.youtube_dto import YoutubeDTO
+from data.youtube.dto.youtube_dto import YoutubeDTO
 
 
 class NewContentView(TemplateView):

@@ -1,4 +1,4 @@
-from data.youtube.video_mapper import VideoMapper
+from data.youtube.mapper.video_mapper import VideoMapper
 from data.youtube.youtube_api_client import YoutubeApiClient
 from domain.entity.youtube_video import YoutubeVideo
 from use_case.base_youtube_use_case import BaseYoutubeUseCase

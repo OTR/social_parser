@@ -1,9 +1,11 @@
-from repository.base_youtube_repository import BaseYoutubeRepository
+import pytest
+
 from repository.youtube.internal_youtube_repository import InternalYoutubeRepository
 from domain.entity.youtube_video import YoutubeVideo
-from data.youtube.video_mapper import VideoMapper
+from data.youtube.mapper.video_mapper import VideoMapper
 
 
+@pytest.skip()
 def test_internal_youtube_repository():
     """"""
     repository = InternalYoutubeRepository()

@@ -33,17 +33,22 @@ class YoutubeVideoService:
     def get_untracked_youtube_videos(self):
         """"""
 
-    def get_not_labeled_youtube_videos(self) -> list[YoutubeVideo]:
+    def get_any_not_labeled_youtube_videos(self) -> list[YoutubeVideo]:
         """"""
-        youtube_dto = self._get_any_youtube_videos_use_case.get_videos()
+        youtube_videos: list[YoutubeVideo] = self._get_any_youtube_videos_use_case.get_videos()
         blocked_channels = HighlightModel.objects.values_list('channel_id', flat=True)
         existing_content_ids = (ContentModel.objects
                                 .filter(platform=ContentPlatform.YOUTUBE.value)
                                 .values_list('content_id', flat=True))
         filtered_videos = [
-            video for video in youtube_dto
+            video for video in youtube_videos
             if video.channel_id not in blocked_channels
                and video.video_id not in existing_content_ids
         ]
 
         return filtered_videos
+
+
+if __name__ == '__main__':
+    service = YoutubeVideoService()
+
