@@ -35,8 +35,9 @@ async def send_youtube_stats() -> None:
 
         while True:
             result: str = await client.loop.run_in_executor(None, get_videos)
-            result = result[:4096]
-            await client.send_message(chat_entity, result, link_preview=False, silent=True)
+            if len(result.strip()) > 1:
+                result = result[:4096]
+                await client.send_message(chat_entity, result, link_preview=False, silent=True)
             await asyncio.sleep(60 * youtube_cooldown_in_minutes)
 
 def main() -> None:
