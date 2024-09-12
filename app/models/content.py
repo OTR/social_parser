@@ -9,8 +9,8 @@ seized_top
 """
 from django.db import models
 from django.utils import timezone
-from app.models.content_status import ContentStatus
-from app.models.content_platform import ContentPlatform
+from domain.vo.content_status import ContentStatus
+from domain.vo.content_platform import ContentPlatform
 
 
 def is_not_blank(value: str):
@@ -19,14 +19,14 @@ def is_not_blank(value: str):
 
 class ContentModel(models.Model):
     """"""
-    STATUS_CHOICES = [(status.value, status.name) for status in ContentStatus]
-    PLATFORM_CHOICES = [(platform.value, platform.name) for platform in ContentPlatform]
+    _STATUS_CHOICES = [(status.value, status.name) for status in ContentStatus]
+    _PLATFORM_CHOICES = [(platform.value, platform.name) for platform in ContentPlatform]
 
     username = models.CharField(max_length=255, null=True)
     subscribers = models.IntegerField(null=True, blank=True)
     platform = models.CharField(
         max_length=20,
-        choices=PLATFORM_CHOICES,
+        choices=_PLATFORM_CHOICES,
         default=ContentPlatform.OTHER.value,
     )
     content_id = models.CharField(max_length=255, verbose_name="Content ID", null=True)
@@ -42,7 +42,7 @@ class ContentModel(models.Model):
     through_suggestion = models.BooleanField(verbose_name="through suggestion", null=True)
     status = models.CharField(
         max_length=20,
-        choices=STATUS_CHOICES,
+        choices=_STATUS_CHOICES,
         default=ContentStatus.NOT_LABELED.value,
     )
 

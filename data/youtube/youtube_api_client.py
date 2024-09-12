@@ -13,12 +13,11 @@ from dotenv import load_dotenv
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from service.youtube.youtube_dto import YoutubeDTO
-from service.youtube.video_dto import VideoDTO
-from service.youtube.youtube_mapper import YoutubeMapper
-from service.youtube.comment_dto import CommentDTO
-from service.youtube.comment_mapper import CommentMapper
-
+from data.youtube.youtube_dto import YoutubeDTO
+from data.youtube.video_dto import VideoDTO
+from data.youtube.video_mapper import VideoMapper
+from data.youtube.comment_dto import CommentDTO
+from data.youtube.comment_mapper import CommentMapper
 
 PATH_TO_ENVIRONMENT_VARIABLES = Path(__file__).parent.parent.parent / "python_anywhere.env"
 load_dotenv(PATH_TO_ENVIRONMENT_VARIABLES)
@@ -26,32 +25,35 @@ load_dotenv(PATH_TO_ENVIRONMENT_VARIABLES)
 
 class YoutubeApiClient:
     """"""
-    QUOTA_REASON: str = ('The request cannot be completed because you have exceeded your '
-                         '<a href="/youtube/v3/getting-started#quota">quota</a>.')
+
+    _QUOTA_REASON: str = (
+        'The request cannot be completed because you have exceeded your ' +
+        '<a href="/youtube/v3/getting-started#quota">quota</a>.'
+    )
 
     def __init__(self):
         """"""
-        self.YOUTUBE_DATA_API_V3_KEY = os.getenv("YOUTUBE_DATA_API_V3_KEY")
-        self.YOUTUBE_API_SERVICE_NAME = "youtube"
-        self.YOUTUBE_API_VERSION = "v3"
-        self.DEFAULT_KEYWORD = os.getenv("DEFAULT_KEYWORD")
-        self.youtube_object = build(
-            self.YOUTUBE_API_SERVICE_NAME,
-            self.YOUTUBE_API_VERSION,
-            developerKey=self.YOUTUBE_DATA_API_V3_KEY
+        self._YOUTUBE_DATA_API_V3_KEY = os.getenv("YOUTUBE_DATA_API_V3_KEY")
+        self._YOUTUBE_API_SERVICE_NAME = "youtube"
+        self._YOUTUBE_API_VERSION = "v3"
+        self._DEFAULT_KEYWORD = os.getenv("DEFAULT_KEYWORD")
+        self._youtube_object = build(
+            self._YOUTUBE_API_SERVICE_NAME,
+            self._YOUTUBE_API_VERSION,
+            developerKey=self._YOUTUBE_DATA_API_V3_KEY
         )
 
     def get_latest_videos(
-        self,
-        keyword=None,
-        max_results=50,
-        page_token="",
-        duration="any"
+            self,
+            keyword=None,
+            max_results=50,
+            page_token="",
+            duration="any"
     ) -> YoutubeDTO:
         """"""
-        query: str = keyword if keyword is not None else self.DEFAULT_KEYWORD
+        query: str = keyword if keyword is not None else self._DEFAULT_KEYWORD
         try:
-            search_response: dict = self.youtube_object.search().list(
+            search_response: dict = self._youtube_object.search().list(
                 q=query,
                 order="date",
                 type="video",
@@ -63,7 +65,7 @@ class YoutubeApiClient:
                 pageToken=page_token
             ).execute()
         except HttpError as err:
-            if err.status_code == 403 and err.reason == YoutubeApiClient.QUOTA_REASON:
+            if err.status_code == 403 and err.reason == YoutubeApiClient._QUOTA_REASON:
                 # TODO LOGGING
                 print("Quota exceeded")
 
@@ -73,7 +75,7 @@ class YoutubeApiClient:
         entities: list = search_response.get("items", [])
         dtos: list[VideoDTO] = []
         for entity in entities:
-            dtos.append(YoutubeMapper.to_dto(entity))
+            dtos.append(VideoMapper.json_to_dto(entity))
 
         return YoutubeDTO(
             next_page_token=next_page_token,
@@ -82,17 +84,17 @@ class YoutubeApiClient:
         )
 
     def get_comments_to_video(
-        self,
-        video_id,
-        max_results=100,
-        moderation_status="published",
-        order="time",
-        text_format="plainText",
-        page_token=""
+            self,
+            video_id,
+            max_results=100,
+            moderation_status="published",
+            order="time",
+            text_format="plainText",
+            page_token=""
     ) -> YoutubeDTO:
         """"""
         try:
-            search_response: dict = self.youtube_object.commentThreads().list(
+            search_response: dict = self._youtube_object.commentThreads().list(
                 part="snippet,id",
                 maxResults=max_results,
                 moderationStatus=moderation_status,
@@ -102,7 +104,7 @@ class YoutubeApiClient:
                 pageToken=page_token
             ).execute()
         except HttpError as err:
-            if err.status_code == 403 and err.reason == YoutubeApiClient.QUOTA_REASON:
+            if err.status_code == 403 and err.reason == YoutubeApiClient._QUOTA_REASON:
                 # TODO LOGGING
                 print("Quota exceeded")
             search_response = {}
