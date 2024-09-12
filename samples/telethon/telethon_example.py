@@ -1,4 +1,3 @@
-import asyncio
 import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.test_settings")
@@ -20,29 +19,28 @@ load_dotenv()
 api_id = int(os.getenv("TELEGRAM_API_ID"))
 api_hash = os.getenv("TELEGRAM_API_HASH")
 phone_number = os.getenv("TELEGRAM_PHONE")
+chat_id = int(os.getenv("TELEGRAM_ADMIN_GROUP_ID"))
 
-
-telegram_group_id = 4565496718
-client = TelegramClient('session_name', api_id, api_hash)
 youtubeClient = YoutubeApiClient()
 
 
-def send_youtube_stats():
-    sleep(10)
-    chat_entity = client.get_entity(PeerChat(telegram_group_id))
+async def send_youtube_stats():
+    chat_entity = await client.get_entity(PeerChat(chat_id))
 
     while True:
         user_input = input("Enter message: ")
         await client.send_message(chat_entity, user_input)
         print("Message sent successfully!")
-
+        sleep(10)
 
 def main():
+
     client.start(phone=phone_number)
-    asyncio.create_task(send_youtube_stats())
     with client:
+        client.loop.create_task(send_youtube_stats())
         client.run_until_disconnected()
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    client = TelegramClient('session_name', api_id, api_hash)
+    main()
