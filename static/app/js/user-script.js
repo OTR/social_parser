@@ -114,7 +114,7 @@ function submitRejectedForm(formId) {
         alert.className = 'alert alert-success alert-dismissible fade show';
         alert.role = 'alert';
         alert.innerHTML = `
-            ${data.channel_title} Marked as highlighter successfully!
+            ${data.title} Added to rejected successfully!
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         `;
         notificationContainer.appendChild(alert);

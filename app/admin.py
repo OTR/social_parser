@@ -10,6 +10,7 @@ class ContentModelAdmin(admin.ModelAdmin):
     """"""
     readonly_fields = ("id",)
     list_filter = ("status", )
+    search_fields = ["content_id",]
 
 
 @admin.register(HighlightModel)

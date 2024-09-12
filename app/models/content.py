@@ -50,6 +50,7 @@ class ContentModel(models.Model):
     class Meta:
         """"""
         ordering = ['id']  # Default ordering by 'id'
+        unique_together = ('content_id', 'platform')
 
     def __str__(self):
         """Redefine string representation of a table row in admin site"""
