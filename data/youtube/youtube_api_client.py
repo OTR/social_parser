@@ -17,12 +17,13 @@ from googleapiclient.errors import HttpError
 
 from data.file_logger import FileLogger
 from data.youtube.csv_key_value_storage import CSVKeyValueStorage
+from data.youtube.dto.comment_dto import CommentDTO
 from data.youtube.dto.youtube_dto import YoutubeDTO
 from data.youtube.dto.video_dto import VideoDTO
 from data.youtube.key_rotator import KeyRotator
-from data.youtube.mapper.video_mapper import VideoMapper
-from data.youtube.dto.comment_dto import CommentDTO
 from data.youtube.mapper.comment_mapper import CommentMapper
+from data.youtube.mapper.video_mapper import VideoMapper
+from exception.youtube_no_available_keys_to_rotate import YoutubeNoAvailableKeysToRotateTo
 
 PATH_TO_PROJECT_ROOT = Path(__file__).parent.parent.parent
 PATH_TO_ENVIRONMENT_VARIABLES = PATH_TO_PROJECT_ROOT / "python_anywhere.env"
@@ -31,7 +32,7 @@ load_dotenv(PATH_TO_ENVIRONMENT_VARIABLES)
 
 class YoutubeApiClient:
     """"""
-
+    _PATH_TO_KEY_STORAGE = PATH_TO_PROJECT_ROOT /  ".data" / "key_storage.csv"
     _YOUTUBE_API_SERVICE_NAME = "youtube"
     _YOUTUBE_API_VERSION = "v3"
     _DEFAULT_KEYWORD = os.getenv("DEFAULT_KEYWORD")
@@ -44,12 +45,10 @@ class YoutubeApiClient:
     def __init__(self, api_client=None, key_rotator=None, logger=None):
         """"""
         keys = os.getenv("YOUTUBE_DATA_API_V3_KEYS")
-        self._youtube_object = api_client or self._build_youtube_object()
         self._key_rotator = key_rotator or self._instantiate_key_rotator(keys)
+        current_key = self._key_rotator.get_current_key()
+        self._youtube_object = api_client or self._build_youtube_object(current_key)
         self._logger = logger or FileLogger().get_logger()
-
-        self._YOUTUBE_DATA_API_V3_KEY = self._key_rotator.get_current_key()
-
 
     def get_latest_videos(
             self,
@@ -127,12 +126,12 @@ class YoutubeApiClient:
             entities=dtos
         )
 
-    def _build_youtube_object(self):
+    def _build_youtube_object(self, key: str):
         """Builds and returns a YouTube API client object."""
         return build(
             self._YOUTUBE_API_SERVICE_NAME,
             self._YOUTUBE_API_VERSION,
-            developerKey=self._YOUTUBE_DATA_API_V3_KEY
+            developerKey=key
         )
 
     def _rotate_key(self):
@@ -140,8 +139,9 @@ class YoutubeApiClient:
         try:
             new_key = self._key_rotator.rotate_key()
             self._logger.info(f"Rotating to new API key: {new_key}")
-            self._YOUTUBE_DATA_API_V3_KEY = new_key
-            self._youtube_object = self._build_youtube_object()
+            self._youtube_object = self._build_youtube_object(new_key)
+        except YoutubeNoAvailableKeysToRotateTo as err:
+            pass
         except Exception as e:
             self._logger.error(f"Failed to rotate key: {e}")
             raise e
@@ -182,7 +182,7 @@ class YoutubeApiClient:
     @staticmethod
     def _instantiate_key_rotator(keys: str) -> KeyRotator:
         # TODO: require keys not blank
-        storage_file = PATH_TO_PROJECT_ROOT / 'key_usage.csv'
+        storage_file = YoutubeApiClient._PATH_TO_KEY_STORAGE
         storage = CSVKeyValueStorage(str(storage_file))
         keys: list[str] = keys.split(";")
         return KeyRotator(keys, storage)

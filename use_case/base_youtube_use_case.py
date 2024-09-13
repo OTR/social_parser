@@ -7,5 +7,5 @@ class BaseYoutubeUseCase(ABC):
     """"""
 
     @abstractmethod
-    def get_videos(self) -> list[YoutubeVideo]:
+    def execute(self) -> list[YoutubeVideo]:
         """"""

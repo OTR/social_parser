@@ -1,32 +1,38 @@
 """"""
 import os
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from dotenv import load_dotenv
 
 from app.models.content import ContentModel
 from data.youtube.dto.video_dto import VideoDTO
 from domain.entity.youtube_video import YoutubeVideo
+from domain.vo.content_platform import ContentPlatform
+from domain.vo.content_status import ContentStatus
 
-PATH_TO_ENVIRONMENT_VARIABLES = Path(__file__).parent.parent.parent / "python_anywhere.env"
+PATH_TO_ENVIRONMENT_VARIABLES = Path(__file__).parent.parent.parent.parent / "python_anywhere.env"
 load_dotenv(PATH_TO_ENVIRONMENT_VARIABLES)
 
 
 class VideoMapper:
-    """"""
-    _iso_datetime_format: str = "%Y-%m-%dT%H:%M:%SZ"
-    _readable_datetime_format: str = "%Y.%m.%d %H:%M:%S"
-    _offset = int(os.getenv("TIMEZONE_OFFSET"))
+    """Mapper class to convert between different representations of video data."""
+    _ISO_DATETIME_FORMAT: str = "%Y-%m-%dT%H:%M:%SZ"
+    _READABLE_DATETIME_FORMAT: str = "%Y.%m.%d %H:%M:%S"
+    _TIMEZONE_OFFSET: int = int(os.getenv("TIMEZONE_OFFSET"))
+    __NOT_DEFINED_INT = -1
+    __NOT_DEFINED_BOOL = False
+    __DBO_REASON_FOR_AUTO_CONVERT = "Quickly added as not labeled by telegram notificator"
 
     @staticmethod
     def datetime_to_local_datetime(utc_datetime: datetime) -> datetime:
         """"""
-        return utc_datetime + timedelta(hours=VideoMapper._offset)
+        return utc_datetime + timedelta(hours=VideoMapper._TIMEZONE_OFFSET)
 
     @staticmethod
     def get_readable_datetime(date_time: datetime) -> str:
-        return datetime.strftime(date_time, VideoMapper._readable_datetime_format)
+        """"""
+        return datetime.strftime(date_time, VideoMapper._READABLE_DATETIME_FORMAT)
 
     @staticmethod
     def json_to_dto(entity: dict) -> VideoDTO:
@@ -39,7 +45,7 @@ class VideoMapper:
         thumbnail_url: str = entity['snippet']['thumbnails']['default']['url']
 
         _published_at: str = entity["snippet"]["publishedAt"]
-        published_at: datetime = datetime.strptime(_published_at, VideoMapper._iso_datetime_format)
+        published_at: datetime = datetime.strptime(_published_at, VideoMapper._ISO_DATETIME_FORMAT)
         published_at_with_tz = VideoMapper.datetime_to_local_datetime(published_at)
 
         return VideoDTO(
@@ -82,7 +88,6 @@ class VideoMapper:
             description=description
         )
 
-
     @staticmethod
     def dbo_to_entity(dbo: ContentModel) -> YoutubeVideo:
         """"""
@@ -101,3 +106,42 @@ class VideoMapper:
             video_id=video_id,
             description=description
         )
+
+    @staticmethod
+    def entity_to_dbo(
+        entity: YoutubeVideo,
+        content_status: ContentStatus = ContentStatus.NOT_LABELED
+    ) -> ContentModel:
+        """
+        Converts a `YoutubeVideo` domain entity to a `ContentModel` database object.
+        For fields that absent in `YoutubeVideo` domain entity assert placeholders
+        that are obviously not existing values like -1 for integer
+        Args:
+            entity (YoutubeVideo): The YoutubeVideo entity to convert.
+            content_status (ContentStatus): moderation status of the video, default `NOT_LABELED`
+        Returns:
+            ContentModel: The corresponding ContentModel instance.
+        """
+        timezone_aware_datetime: datetime = entity.published_at.replace(
+            tzinfo=timezone(timedelta(hours=VideoMapper._TIMEZONE_OFFSET))
+        )
+        dbo = ContentModel(
+            username=entity.channel_title,
+            subscribers=VideoMapper.__NOT_DEFINED_INT,
+            platform=ContentPlatform.YOUTUBE.value,
+            content_id=entity.video_id,
+            link=entity.get_video_url(),
+            seized_top=VideoMapper.__NOT_DEFINED_BOOL,
+            # Default values for fields not present in YoutubeVideo entity
+            # Assuming some fields like subscribers, views, likes, etc. are not part of YoutubeVideo
+            views=VideoMapper.__NOT_DEFINED_INT,
+            likes=VideoMapper.__NOT_DEFINED_INT,
+            shares=VideoMapper.__NOT_DEFINED_INT,
+            comments=VideoMapper.__NOT_DEFINED_INT,
+            published_at=timezone_aware_datetime,
+            title=entity.title,
+            reason=VideoMapper.__DBO_REASON_FOR_AUTO_CONVERT,
+            through_suggestion=VideoMapper.__NOT_DEFINED_BOOL,
+            status=content_status.value,
+        )
+        return dbo

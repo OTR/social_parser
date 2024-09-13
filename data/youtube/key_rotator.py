@@ -1,6 +1,8 @@
 """
 """
 from data.youtube.csv_key_value_storage import CSVKeyValueStorage
+from exception.youtube_no_available_keys_to_rotate import YoutubeNoAvailableKeysToRotateTo
+
 
 class KeyRotator:
     """"""
@@ -26,7 +28,7 @@ class KeyRotator:
             if self._storage.is_key_available(key):
                 return key
             if self._current_key_index == starting_index:
-                raise Exception("No available API keys to rotate to.")
+                raise YoutubeNoAvailableKeysToRotateTo(api_key=key)
     
     def record_quota_exceeded(self):
         """Record the quota exceeded time for the current key."""

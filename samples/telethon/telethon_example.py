@@ -25,8 +25,8 @@ chat_id = int(os.getenv("TELEGRAM_ADMIN_GROUP_ID"))
 youtube_cooldown_in_minutes = int(os.getenv("YOUTUBE_COOLDOWN_IN_MINUTES"))
 youtube_video_service = YoutubeVideoService()
 
-def get_videos() -> str:
-    filtered_videos: list[YoutubeVideo] = youtube_video_service.get_any_not_labeled_youtube_videos()
+def get_not_labeled_videos() -> str:
+    filtered_videos: list[YoutubeVideo] = youtube_video_service.get_and_persist_not_labeled_youtube_videos()
     response: str = "\n".join(map(VideoMapper.entity_to_text, filtered_videos))
     return response
 
@@ -34,7 +34,7 @@ async def send_youtube_stats() -> None:
         chat_entity = await client.get_entity(PeerChat(chat_id))
 
         while True:
-            result: str = await client.loop.run_in_executor(None, get_videos)
+            result: str = await client.loop.run_in_executor(None, get_not_labeled_videos)
             if len(result.strip()) > 1:
                 result = result[:4096]
                 await client.send_message(chat_entity, result, link_preview=False, silent=True)

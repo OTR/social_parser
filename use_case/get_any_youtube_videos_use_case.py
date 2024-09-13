@@ -13,7 +13,7 @@ class GetAnyYoutubeVideosUseCase(BaseYoutubeUseCase):
     ):
         self._youtube_api_client = youtube_api_client
 
-    def get_videos(self) -> list[YoutubeVideo]:
+    def execute(self) -> list[YoutubeVideo]:
         youtube_dto = self._youtube_api_client.get_latest_videos(duration="any")
         youtube_videos = list(map(VideoMapper.dto_to_entity, youtube_dto.entities))
         return youtube_videos
