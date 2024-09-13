@@ -89,6 +89,10 @@ class YoutubeApiClient:
             entities=dtos
         )
 
+    def get_channel_info(self, ) -> None:
+        """"""
+
+
     def get_comments_to_video(
             self,
             video_id,
