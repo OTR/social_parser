@@ -1,5 +1,6 @@
 """"""
 import os
+import textwrap
 from pathlib import Path
 from datetime import datetime, timedelta, timezone, tzinfo
 import pytz
@@ -7,6 +8,7 @@ import pytz
 from dotenv import load_dotenv
 
 from app.models.content import ContentModel
+from app.templatetags.custom_filters import time_since
 from data.youtube.dto.video_dto import VideoDTO
 from domain.entity.youtube_video import YoutubeVideo
 from domain.vo.content_platform import ContentPlatform
@@ -70,7 +72,13 @@ class VideoMapper:
         readable_published_at: str = VideoMapper.get_readable_datetime(local_published_at)
         channel_title = entity.channel_title
         youtube_url = entity.get_video_url()
-        return f"{title}\n{channel_title}\n{readable_published_at}\n{youtube_url}\n"
+        local_time_since = time_since(local_published_at)
+        return textwrap.dedent(f"""
+            {title}
+            {channel_title}
+            {readable_published_at}
+            {local_time_since}
+            {youtube_url}""").strip()
 
     @staticmethod
     def dto_to_entity(dto: VideoDTO) -> YoutubeVideo:
