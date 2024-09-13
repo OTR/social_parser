@@ -6,6 +6,7 @@ from app.models.content import ContentModel
 from data.youtube.dto.video_dto import VideoDTO
 from data.youtube.youtube_api_client import YoutubeApiClient
 from data.youtube.dto.youtube_dto import YoutubeDTO
+from domain.vo.content_platform import ContentPlatform
 
 
 class NewContentView(TemplateView):
@@ -37,7 +38,9 @@ class NewContentView(TemplateView):
         blocked_channels = HighlightModel.objects.values_list('channel_id', flat=True)
 
         # Get the list of content IDs and platforms to filter out
-        existing_content_ids = ContentModel.objects.filter(platform='YOUTUBE').values_list('content_id', flat=True)
+        existing_content_ids = (ContentModel.objects
+                                .filter(platform=ContentPlatform.YOUTUBE.value)
+                                .values_list('content_id', flat=True))
 
         # Filter out the videos from the blocked channels and those already in ContentModel
         filtered_videos: list[VideoDTO] = [

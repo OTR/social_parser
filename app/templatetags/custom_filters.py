@@ -15,7 +15,7 @@ load_dotenv()
 def time_since(value):
     offset = os.getenv("TIMEZONE_OFFSET")
     local_tz = pytz.timezone("Etc/GMT-" + str(offset))
-    value = timezone.make_aware(value, local_tz)
+    # value = timezone.make_aware(value, local_tz)
     now = timezone.datetime.now().astimezone(local_tz)
     diff = now - value
 

@@ -1,7 +1,8 @@
 """"""
 import os
 from pathlib import Path
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, tzinfo
+import pytz
 
 from dotenv import load_dotenv
 
@@ -18,7 +19,7 @@ load_dotenv(PATH_TO_ENVIRONMENT_VARIABLES)
 class VideoMapper:
     """Mapper class to convert between different representations of video data."""
     _ISO_DATETIME_FORMAT: str = "%Y-%m-%dT%H:%M:%SZ"
-    _READABLE_DATETIME_FORMAT: str = "%Y.%m.%d %H:%M:%S"
+    _READABLE_DATETIME_FORMAT: str = "%d.%m.%Y %H:%M:%S"
     _TIMEZONE_OFFSET: int = int(os.getenv("TIMEZONE_OFFSET"))
     __NOT_DEFINED_INT = -1
     __NOT_DEFINED_BOOL = False
@@ -26,7 +27,7 @@ class VideoMapper:
 
     @staticmethod
     def datetime_to_local_datetime(utc_datetime: datetime) -> datetime:
-        """"""
+        """Deprecated"""
         return utc_datetime + timedelta(hours=VideoMapper._TIMEZONE_OFFSET)
 
     @staticmethod
@@ -46,7 +47,7 @@ class VideoMapper:
 
         _published_at: str = entity["snippet"]["publishedAt"]
         published_at: datetime = datetime.strptime(_published_at, VideoMapper._ISO_DATETIME_FORMAT)
-        published_at_with_tz = VideoMapper.datetime_to_local_datetime(published_at)
+        published_at_with_tz = published_at.replace(tzinfo=pytz.UTC)
 
         return VideoDTO(
             title=title,
@@ -63,7 +64,9 @@ class VideoMapper:
         """"""
         title = entity.title
         _published_at = entity.published_at
-        local_published_at: datetime = VideoMapper.datetime_to_local_datetime(_published_at)
+        # local_published_at: datetime = VideoMapper.datetime_to_local_datetime(_published_at)
+        timezone = pytz.timezone('Etc/GMT-' + str(VideoMapper._TIMEZONE_OFFSET))
+        local_published_at: datetime = _published_at.astimezone(timezone)
         readable_published_at: str = VideoMapper.get_readable_datetime(local_published_at)
         channel_title = entity.channel_title
         youtube_url = entity.get_video_url()
