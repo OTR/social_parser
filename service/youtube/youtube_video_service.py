@@ -2,8 +2,6 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-from use_case.persist_not_labeled_videos_use_case import PersistNotLabeledVideosUseCase
-
 load_dotenv(Path(__file__).parent.parent.parent / "python_anywhere.env")
 DEFAULT_DJANGO_SETTINGS = os.getenv("DEFAULT_DJANGO_SETTINGS")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", DEFAULT_DJANGO_SETTINGS)
@@ -15,6 +13,7 @@ from use_case.get_long_youtube_videos_use_case import GetLongYoutubeVideosUseCas
 from use_case.get_any_youtube_videos_use_case import GetAnyYoutubeVideosUseCase
 from use_case.get_medium_youtube_videos_use_case import GetMediumYoutubeVideosUseCase
 from use_case.filter_known_videos_use_case import FilterHighlightersAndKnownVideosUseCase
+from use_case.persist_not_labeled_videos_use_case import PersistNotLabeledVideosUseCase
 
 
 class YoutubeVideoService:
