@@ -5,7 +5,7 @@ from telethon import TelegramClient
 from dotenv import load_dotenv
 from telethon.tl.types import PeerChat
 
-load_dotenv("../../python_anywhere.env")
+load_dotenv("../../prod.env")
 api_id = int(os.getenv("TELEGRAM_API_ID"))
 api_hash = os.getenv("TELEGRAM_API_HASH")
 phone_number = os.getenv("TELEGRAM_PHONE")

@@ -10,7 +10,7 @@ Social network monitoring tool
 4. `pip3 install poetry`
 5. `poetry shell`
 6. `poetry update`
-7. `cp python_anywhere.env.example python_anywhere.env`
+7. `cp prod.env.example prod.env`
 8. fill up environment variables in file python_anywhere.env
 8. `...`
 9. `PROFIT!!!`

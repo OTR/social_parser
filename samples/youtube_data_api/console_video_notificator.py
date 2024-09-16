@@ -4,7 +4,7 @@ import time
 
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).parent.parent.parent / "python_anywhere.env")
+load_dotenv(Path(__file__).parent.parent.parent / "prod.env")
 DEFAULT_DJANGO_SETTINGS = os.getenv("DEFAULT_DJANGO_SETTINGS")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", DEFAULT_DJANGO_SETTINGS)
 import django

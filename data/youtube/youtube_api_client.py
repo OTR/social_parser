@@ -28,7 +28,7 @@ from data.youtube.mapper.video_mapper import VideoMapper
 from exception.youtube_no_available_keys_to_rotate import YoutubeNoAvailableKeysToRotateTo
 
 PATH_TO_PROJECT_ROOT = Path(__file__).parent.parent.parent
-PATH_TO_ENVIRONMENT_VARIABLES = PATH_TO_PROJECT_ROOT / "python_anywhere.env"
+PATH_TO_ENVIRONMENT_VARIABLES = PATH_TO_PROJECT_ROOT / "prod.env"
 load_dotenv(PATH_TO_ENVIRONMENT_VARIABLES)
 
 
