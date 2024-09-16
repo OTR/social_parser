@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-from use_case.acquire_channel_info_use_case import AcquireChannelInfoUseCase
 
 load_dotenv(Path(__file__).parent.parent.parent / "python_anywhere.env")
 DEFAULT_DJANGO_SETTINGS = os.getenv("DEFAULT_DJANGO_SETTINGS")
@@ -10,7 +9,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", DEFAULT_DJANGO_SETTINGS)
 import django
 django.setup()
 
+from data.youtube.dto.channel_details_dto import ChannelDetailsDTO
 from domain.entity.youtube_video import YoutubeVideo
+from use_case.acquire_channel_details_use_case import AcquireChannelDetailsUseCase
 from use_case.get_long_youtube_videos_use_case import GetLongYoutubeVideosUseCase
 from use_case.get_any_youtube_videos_use_case import GetAnyYoutubeVideosUseCase
 from use_case.get_medium_youtube_videos_use_case import GetMediumYoutubeVideosUseCase
@@ -28,7 +29,7 @@ class YoutubeVideoService:
             long_videos_use_case = GetLongYoutubeVideosUseCase(),
             filter_known_videos_use_case = FilterHighlightersAndKnownVideosUseCase(),
             persist_videos_use_case = PersistNotLabeledVideosUseCase(),
-            acquire_channel_info_use_case = AcquireChannelInfoUseCase()
+            acquire_channel_details_use_case = AcquireChannelDetailsUseCase()
     ):
         """"""
         self._get_any_youtube_videos_use_case = any_videos_use_case
@@ -36,7 +37,7 @@ class YoutubeVideoService:
         self._get_long_youtube_videos_use_case = long_videos_use_case
         self._filter_known_videos_use_case = filter_known_videos_use_case
         self._persist_not_labeled_videos_use_case = persist_videos_use_case
-        self._acquire_channel_info_use_case = acquire_channel_info_use_case
+        self._acquire_channel_details_use_case = acquire_channel_details_use_case
 
     def get_and_persist_not_labeled_youtube_videos(self):
         """
@@ -48,10 +49,14 @@ class YoutubeVideoService:
         long_youtube_videos: list[YoutubeVideo] = self._get_long_youtube_videos_use_case.execute()
         youtube_videos = list(set(medium_youtube_videos) | set(long_youtube_videos))
         filtered_videos: list[YoutubeVideo] = self._filter_known_videos_use_case.execute(youtube_videos)
-        filtered_videos = self._acquire_channel_info_use_case.execute(filtered_videos)
         self._persist_not_labeled_videos_use_case.execute(filtered_videos)
 
         return filtered_videos
+
+    def get_channel_details(self, videos: list[YoutubeVideo]) -> list[ChannelDetailsDTO]:
+        """"""
+        channel_details = self._acquire_channel_details_use_case.execute(videos)
+        return channel_details
 
     def get_any_untracked_youtube_videos(self) -> list[YoutubeVideo]:
         """"""
@@ -59,8 +64,3 @@ class YoutubeVideoService:
         filtered_videos: list[YoutubeVideo] = self._filter_known_videos_use_case.execute(youtube_videos)
 
         return filtered_videos
-
-
-if __name__ == '__main__':
-    service = YoutubeVideoService()
-

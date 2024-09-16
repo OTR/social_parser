@@ -17,10 +17,12 @@ from googleapiclient.errors import HttpError
 
 from data.file_logger import FileLogger
 from data.youtube.csv_key_value_storage import CSVKeyValueStorage
+from data.youtube.dto.channel_details_dto import ChannelDetailsDTO
 from data.youtube.dto.comment_dto import CommentDTO
 from data.youtube.dto.youtube_dto import YoutubeDTO
 from data.youtube.dto.video_dto import VideoDTO
 from data.youtube.key_rotator import KeyRotator
+from data.youtube.mapper.channel_details_mapper import ChannelDetailsMapper
 from data.youtube.mapper.comment_mapper import CommentMapper
 from data.youtube.mapper.video_mapper import VideoMapper
 from exception.youtube_no_available_keys_to_rotate import YoutubeNoAvailableKeysToRotateTo
@@ -89,8 +91,31 @@ class YoutubeApiClient:
             entities=dtos
         )
 
-    def get_channel_info(self, ) -> None:
+    def get_channel_statistics(
+            self,
+            channel_ids: list[str],
+            max_results=50,
+            page_token=""
+    ) -> list[ChannelDetailsDTO]:
         """"""
+        search_response = {}
+
+        def make_request():
+            return self._youtube_object.channels().list(
+                part="snippet,statistics,brandingSettings,topicDetails",
+                id=",".join(channel_ids),
+                maxResults=max_results,
+                pageToken=page_token
+            ).execute()
+
+        search_response = self._retry_request(make_request)
+
+        entities: list = search_response.get("items", [])
+        dtos: list[ChannelDetailsDTO] = []
+        for entity in entities:
+            dtos.append(ChannelDetailsMapper.json_to_dto(entity))
+
+        return dtos
 
 
     def get_comments_to_video(
@@ -155,7 +180,10 @@ class YoutubeApiClient:
         attempt = 0
         while attempt < self._MAX_RETRIES:
             try:
-                return func(*args, **kwargs)
+                result = func(*args, **kwargs)
+                if result is None:
+                    print()
+                return result
             except HttpError as err:
                 if err.status_code == 403 and YoutubeApiClient._QUOTA_REASON in err.reason:
                     self._logger.debug(f"Quota exceeded for key: {self._key_rotator.get_current_key()}")

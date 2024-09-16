@@ -2,9 +2,9 @@
 import os
 import textwrap
 from pathlib import Path
-from datetime import datetime, timedelta, timezone, tzinfo
-import pytz
+from datetime import datetime, timedelta, timezone
 
+import pytz
 from dotenv import load_dotenv
 
 from app.models.content import ContentModel
@@ -66,9 +66,8 @@ class VideoMapper:
         """"""
         title = entity.title
         _published_at = entity.published_at
-        # local_published_at: datetime = VideoMapper.datetime_to_local_datetime(_published_at)
-        timezone = pytz.timezone('Etc/GMT-' + str(VideoMapper._TIMEZONE_OFFSET))
-        local_published_at: datetime = _published_at.astimezone(timezone)
+        local_timezone = pytz.timezone('Etc/GMT-' + str(VideoMapper._TIMEZONE_OFFSET))
+        local_published_at: datetime = _published_at.astimezone(local_timezone)
         readable_published_at: str = VideoMapper.get_readable_datetime(local_published_at)
         channel_title = entity.channel_title
         youtube_url = entity.get_video_url()
@@ -136,6 +135,7 @@ class VideoMapper:
         timezone_aware_datetime: datetime = entity.published_at.replace(
             tzinfo=timezone(timedelta(hours=VideoMapper._TIMEZONE_OFFSET))
         )
+
         dbo = ContentModel(
             username=entity.channel_title,
             subscribers=VideoMapper.__NOT_DEFINED_INT,

@@ -15,12 +15,13 @@ _LOG_DATE_FORMAT = "%d.%m.%Y %H:%M:%S"
 """
 import logging
 import os
-
+from pathlib import Path
 
 class FileLogger:
     """"""
     _instance = None
-    _LOG_FILE = '.data/logs/error.log'
+    _PROJECT_ROOT = Path(__file__).parent.parent
+    _LOG_FILE = _PROJECT_ROOT / '.data/logs/error.log'
     _LOG_MESSAGE_FORMAT = "%(asctime)-8s %(levelname)-8s %(message)s"
     _LOG_DATE_FORMAT = "%d.%m.%Y %H:%M:%S"
     _LOG_LEVEL = logging.DEBUG
