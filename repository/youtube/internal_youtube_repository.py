@@ -57,6 +57,10 @@ class InternalYoutubeRepository(BaseYoutubeRepository):
                 )
             )
             ContentModel.objects.bulk_create(dbos)
+            if len(entities_to_persist) > 0:
+                self._logger.debug(f"Successfully persisted a video with title f{entities_to_persist[0].title}")
+            else:
+                self._logger.debug("Script has run but videos to persist not found")
         except Exception as err:
             self._logger.debug(f"Could not persist DB owner {err}")
             raise err

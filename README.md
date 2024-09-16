@@ -21,8 +21,8 @@ Social network monitoring tool
 ## Run telegram Bot with notifications
 
 ```shell
-chmod +x telegram_notification_starter.sh
-./telegram_notification_starter.sh
+chmod +x telegram_full_starter.sh
+./telegram_full_starter.sh
 ```
 
 ## Run console script with notifications

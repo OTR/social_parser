@@ -42,7 +42,7 @@ async def send_youtube_stats() -> None:
 def main() -> None:
     client.start(bot_token=bot_token)
     with client:
-        client.loop.create_task(send_youtube_stats())
+        client.loop.run_until_complete(send_youtube_stats())
 
 
 if __name__ == '__main__':
