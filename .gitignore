@@ -50,3 +50,7 @@ dmypy.json
 
 python_anywhere.env
 /staticfiles
+
+#telethon session
+session_name.session
+session_name.session-journal

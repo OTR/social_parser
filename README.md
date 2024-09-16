@@ -11,6 +11,20 @@ Social network monitoring tool
 
 # Run locally
 
+## Run telegram Bot with notifications
+
+```shell
+chmod +x telegram_notification_starter.sh
+./telegram_notification_starter.sh
+```
+
+## Run console script with notifications
+
+```shell
+chmod +x console_starter.sh
+./console_starter.sh
+```
+
 To run the application with file based SQLite database, just in case of smoke test
 
 `python manage.py runserver --settings config.settings.test_settings`

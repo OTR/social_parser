@@ -21,7 +21,7 @@ from service.youtube.youtube_video_service import YoutubeVideoService
 
 api_id = int(os.getenv("TELEGRAM_API_ID"))
 api_hash = os.getenv("TELEGRAM_API_HASH")
-phone_number = os.getenv("TELEGRAM_PHONE")
+bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
 chat_id = int(os.getenv("TELEGRAM_ADMIN_GROUP_ID"))
 youtube_cooldown_in_minutes = int(os.getenv("YOUTUBE_COOLDOWN_IN_MINUTES"))
 youtube_video_service = YoutubeVideoService()
@@ -45,7 +45,7 @@ async def send_youtube_stats() -> None:
             await asyncio.sleep(60 * youtube_cooldown_in_minutes)
 
 def main() -> None:
-    client.start(phone=phone_number)
+    client.start(bot_token=bot_token)
     with client:
         client.loop.create_task(send_youtube_stats())
         client.run_until_disconnected()
