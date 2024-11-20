@@ -6,14 +6,16 @@ Social network monitoring tool
 
 1. Install PyCharm IDE
 2. Install Python via PyCharm IDE (Settings => Project => Python interpreter => Virtual Env => Python 3.10.X)
-3. `git clone git@github.com:NikLeonov/parser_makaron.git` | Get from VCS from IDE
+3. `git clone git@github.com:OTR/social_parser.git` | Get from VCS from IDE
 4. `pip3 install poetry`
 5. `poetry shell`
 6. `poetry update`
 7. `cp prod.env.example prod.env`
-8. fill up environment variables in file python_anywhere.env
-8. `...`
-9. `PROFIT!!!`
+8. fill up environment variables in file prod.env
+
+# Environment variables configuration
+
+
 
 
 # Run locally
