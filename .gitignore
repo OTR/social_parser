@@ -48,7 +48,6 @@ dmypy.json
 # PyCharm
 .idea/
 
-prod.env
 /staticfiles
 
 #telethon session
