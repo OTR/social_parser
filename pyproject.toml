@@ -16,7 +16,7 @@ pymysql = "^1.1.1"
 google-api-python-client = "^2.141.0"
 pytz = "^2024.1"
 djangorestframework = "^3.15.2"
-telethon = "^1.36.0"
+telethon = "1.37.0"
 pytest = "^8.3.2"
 
 
