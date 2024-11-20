@@ -15,6 +15,11 @@ Social network monitoring tool
 
 # Environment variables configuration
 
+This section provides instructions for filling up the environment variables in the `prod.env` file.
+The `prod.env` file is used to store sensitive configuration settings for the production environment,
+such as database connection details, API keys, and other environment-specific variables.
+
+Developers should populate this file with the appropriate values before deploying the application to the production environment.
 
 
 
