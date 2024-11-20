@@ -79,18 +79,3 @@ class UrlParser:
             return match.group(1)
 
         raise ValueError("Could not find Tiktok video ID from the given link " + url)
-
-
-if __name__ == "__main__":
-    print(UrlParser.get_content_id("https://x.com/urrrswtht/status/1812872916519756282"))
-    print(UrlParser.get_content_id("https://x.com/DantesDmitriy/status/1816143577036251642"))
-    print(UrlParser.get_content_id("https://www.instagram.com/reel/C9r_0ruov32"))
-    print(UrlParser.get_content_id("https://www.instagram.com/p/C94CTSZCvvn/"))
-    print(UrlParser.get_content_id("https://www.youtube.com/shorts/tKFVgdnK2ks"))
-    print(UrlParser.get_content_id("https://www.youtube.com/watch?v=SN2l4GPBQv8"))
-    print(UrlParser.get_content_id("https://www.tiktok.com/@karolinakeleshian/video/7398067559024643346"))
-    print(UrlParser.get_content_id("https://www.tiktok.com/@d.chert/video/7394912485314252040?_t=8oKFButr1GR&_r=1"))
-    print(UrlParser.get_content_id("https://www.youtube.com/shorts/tKFVgdnK2ks"))
-    print(UrlParser.get_content_id("https://www.youtube.com/watch?app=desktop&v=KK2EHRLuZvg"))
-    print(UrlParser.get_content_id("https://youtube.com/shorts/dWIkGQt3xMw?si=poPoLKCfgdkXYm9G"))
-    print(UrlParser.get_content_id("https://youtu.be/OCiaMzkim5A?si=BHa6D9WrgiR2Psdo"))
