@@ -20,7 +20,6 @@ function getCookie(name) {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -44,7 +43,6 @@ function submitHighlighterForm(formId) {
         body: JSON.stringify({
             channel_id: formData.get('channel_id'),
             channel_title: formData.get('channel_title'),
-            // published_at: formData.get('published_at'),
             reason: formData.get('reason')
         })
     })
