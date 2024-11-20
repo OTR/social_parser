@@ -40,7 +40,6 @@
         async function checkForNewContent() {
             try {
                  const response = await fetch('/api/new');
-                //const response = await fetch('/');
 
                 if (response.ok) {
                     const data = await response.json();
