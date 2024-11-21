@@ -20,6 +20,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.VDS_SSH_KEY }}
 
+      # Verify the SSH key is loaded
+      - name: Verify SSH Key
+        run: ssh-add -l
+
       # Deploy application to VDS
       - name: Deploy to VDS
         env:
