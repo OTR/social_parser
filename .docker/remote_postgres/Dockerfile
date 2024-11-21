@@ -3,7 +3,7 @@ FROM python:3.11-alpine
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    DJANGO_SETTINGS_MODULE=config.settings.test_settings
+    DJANGO_SETTINGS_MODULE=config.settings.postgres_settings
 
 # Set working directory
 WORKDIR /app
