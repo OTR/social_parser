@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import time
 
 from dotenv import load_dotenv
 

@@ -1,8 +1,8 @@
 import asyncio
 import os
 
-from telethon import TelegramClient
 from dotenv import load_dotenv
+from telethon import TelegramClient
 from telethon.tl.types import PeerChat
 
 load_dotenv("../../prod.env")

@@ -15,13 +15,14 @@ Social network monitoring tool
 
 # Environment variables configuration
 
-This section provides instructions for filling up the environment variables in the `prod.env` file.
-The `prod.env` file is used to store sensitive configuration settings for the production environment,
-such as database connection details, API keys, and other environment-specific variables.
-
-Developers should populate this file with the appropriate values before deploying the application to the production environment.
+Copy existing `prod.env.example` file and rename it to `prod.env`.
+The `prod.env` file is used to store configuration settings for the production environment,
+such as database connection details, API keys.
 
 
+## Fill up the environment variables in the `prod.env` file
+
+`DEFAULT_DJANGO_SETTINGS=config.settings.test_settings` - path to Django settings for quick local run with SQLite3 based database.
 
 # Run locally
 

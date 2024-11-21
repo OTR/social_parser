@@ -1,17 +1,16 @@
-""""""
 import csv
-from pathlib import Path
 import json
+from pathlib import Path
 
-from samples.csv_parser.target_mapper import TargetMapper
-from samples.csv_parser.psyop_target_dto import PsyOpTargetDTO
 from samples.csv_parser.highlighter_dto import HighlighterDTO
+from samples.csv_parser.target_dto import TargetDTO
+from samples.csv_parser.target_mapper import TargetMapper
 
 
 class CsvLoader:
     """"""
     PROJECT_ROOT = Path(__file__).parent.parent.parent
-    INPUT_TARGETS_FILE = PROJECT_ROOT / ".data" / "psyop_targets.csv"
+    INPUT_TARGETS_FILE = PROJECT_ROOT / ".data" / "targets.csv"
     INPUT_HIGHLIGHTERS_FILE = PROJECT_ROOT / ".data" / "highlighters.csv"
     OUTPUT_TARGETS_FILE = PROJECT_ROOT / "app" / "fixtures" / "targets.json"
     OUTPUT_HIGHLIGHTERS_FILE = PROJECT_ROOT / "app" / "fixtures" / "highlighters.json"
@@ -27,7 +26,7 @@ class CsvLoader:
             for row in reader:
                 if row[3] and row[3].startswith("https"):
                     try:
-                        target: PsyOpTargetDTO = TargetMapper.csv_to_domain(row)
+                        target: TargetDTO = TargetMapper.csv_to_domain(row)
                         targets.append(target)
                     except ValueError as e:
                         if e.args[0] == "Unknown platform t":
@@ -55,9 +54,9 @@ class CsvLoader:
         return highlighters
 
     @staticmethod
-    def create_targets_json(targets: list[PsyOpTargetDTO]) -> None:
+    def create_targets_json(targets: list[TargetDTO]) -> None:
         """"""
-        targets: list[PsyOpTargetDTO] = CsvLoader.parse_targets_csv()
+        targets: list[TargetDTO] = CsvLoader.parse_targets_csv()
         json_to_dump = list()
         for i, target in enumerate(targets, start=1):
             json_to_dump.append(

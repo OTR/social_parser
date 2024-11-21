@@ -1,14 +1,12 @@
 import asyncio
 import os
-from pathlib import Path
-import json
 from datetime import datetime
-
+from pathlib import Path
 
 from dotenv import load_dotenv
 from telethon import TelegramClient
-from telethon.tl.types import  PeerChannel
 from telethon.tl.functions.messages import GetDiscussionMessageRequest
+from telethon.tl.types import PeerChannel
 
 load_dotenv(Path(__file__).parent.parent.parent / "prod.env")
 

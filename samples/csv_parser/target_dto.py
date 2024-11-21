@@ -1,9 +1,8 @@
-""""""
 from dataclasses import dataclass
 
 
 @dataclass
-class PsyOpTargetDTO:
+class TargetDTO:
     _number: int
     username: str
     title: str

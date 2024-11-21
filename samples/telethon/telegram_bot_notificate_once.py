@@ -3,8 +3,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from telethon import TelegramClient
-from telethon.tl.types import PeerChat, PeerChannel
-
+from telethon.tl.types import PeerChannel
 
 load_dotenv(Path(__file__).parent.parent.parent / "prod.env")
 DEFAULT_DJANGO_SETTINGS = os.getenv("DEFAULT_DJANGO_SETTINGS")

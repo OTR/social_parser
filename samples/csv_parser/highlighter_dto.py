@@ -1,13 +1,16 @@
-""""""
 from dataclasses import dataclass
 
 
 @dataclass
 class HighlighterDTO:
     """
-    channel_id
-    channel_title
-    reason
+    Represents a data transfer object (DTO) for a highlighter channel.
+
+    - `channel_id`: (str) YouTube native channel ID.
+    - `channel_title`: (str) The title of the channel.
+    - `reason`: (str) The reason for being marked as a highlighter.
+
+    The `get_fields_as_dict()` method returns a dict representation of the DTO.
     """
     channel_id: str
     channel_title: str
