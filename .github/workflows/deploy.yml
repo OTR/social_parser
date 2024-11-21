@@ -1,0 +1,35 @@
+name: CI/CD Docker Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up SSH for the VDS
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.VDS_SSH_KEY }}
+
+      # Deploy application to VDS
+      - name: Deploy to VDS
+        env:
+          VDS_USER: ${{ secrets.VDS_USER }}
+          VDS_IP: ${{ secrets.VDS_IP }}
+          VDS_PROJECT_DIR: ${{ secrets.VDS_PROJECT_DIR }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $VDS_USER@$VDS_IP << 'EOF'
+            cd $VDS_PROJECT_DIR
+            git pull origin main
+            docker-compose -f .docker/remote_sqlite/docker-compose.yml down
+            docker-compose -f .docker/remote_sqlite/docker-compose.yml up -d --build
+          EOF
