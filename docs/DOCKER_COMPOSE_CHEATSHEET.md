@@ -62,13 +62,6 @@ docker logs --tail 50 django_remote_social_parser
 docker logs --timestamps <container_name_or_id>
 ```
 
-
-## Clean up unused containers, images, networks, and volumes.
-
-```bash
-docker system prune -a --volumes
-```
-
 ## Clear Docker Build Cache with all cache layers:
 
 ```bash

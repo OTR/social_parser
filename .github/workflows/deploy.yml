@@ -24,6 +24,19 @@ jobs:
       - name: Verify SSH Key
         run: ssh-add -l
 
+      - name: Debug Remote Directory
+        env:
+          VDS_USER: ${{ secrets.VDS_USER }}
+          VDS_IP: ${{ secrets.VDS_IP }}
+          VDS_PROJECT_DIR: ${{ secrets.VDS_PROJECT_DIR }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $VDS_USER@$VDS_IP << 'EOF'
+            echo "Current Directory: $VDS_PROJECT_DIR"
+            ls -al $VDS_PROJECT_DIR
+            ls -al $VDS_PROJECT_DIR/.docker/remote_postgres/
+          EOF
+
+
       # Deploy application to VDS
       - name: Deploy to VDS
         env:
@@ -32,8 +45,8 @@ jobs:
           VDS_PROJECT_DIR: ${{ secrets.VDS_PROJECT_DIR }}
         run: |
           ssh -o StrictHostKeyChecking=no $VDS_USER@$VDS_IP << 'EOF'
-            cd $VDS_PROJECT_DIR
-            git pull origin main
-            docker-compose -f .docker/remote_sqlite/docker-compose.yml down
-            docker-compose -f .docker/remote_sqlite/docker-compose.yml up -d --build
+            cd $VDS_PROJECT_DIR && \
+            git pull origin main && \
+            docker-compose -f .docker/remote_postgres/docker-compose.yml down && \
+            docker-compose -f .docker/remote_postgres/docker-compose.yml up -d --build
           EOF
