@@ -21,7 +21,13 @@ such as database connection details, API keys.
 
 ## Fill up the environment variables in the `prod.env` file
 
-`DEFAULT_DJANGO_SETTINGS=config.settings.test_settings` - path to Django settings for quick local run with SQLite3 based database.
+`DJANGO_SUPERUSER_USERNAME` - username for login to Django admin site 
+
+`DJANGO_SUPERUSER_PASSWORD` - password for login to Django admin panel
+
+`DEFAULT_DJANGO_SETTINGS` - path to default Django settings file
+
+`DEFAULT_DJANGO_SETTINGS=config.settings.test_settings` - Use this line for quick local run with SQLite3 based database.
 
 # Run locally
 
