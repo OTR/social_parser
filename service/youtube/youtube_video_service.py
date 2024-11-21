@@ -23,13 +23,13 @@ class YoutubeVideoService:
     """"""
 
     def __init__(
-            self,
-            any_videos_use_case = GetAnyYoutubeVideosUseCase(),
-            medium_videos_use_case = GetMediumYoutubeVideosUseCase(),
-            long_videos_use_case = GetLongYoutubeVideosUseCase(),
-            filter_known_videos_use_case = FilterHighlightersAndKnownVideosUseCase(),
-            persist_videos_use_case = PersistNotLabeledVideosUseCase(),
-            acquire_channel_details_use_case = AcquireChannelDetailsUseCase()
+        self,
+        any_videos_use_case = GetAnyYoutubeVideosUseCase(),
+        medium_videos_use_case = GetMediumYoutubeVideosUseCase(),
+        long_videos_use_case = GetLongYoutubeVideosUseCase(),
+        filter_known_videos_use_case = FilterHighlightersAndKnownVideosUseCase(),
+        persist_videos_use_case = PersistNotLabeledVideosUseCase(),
+        acquire_channel_details_use_case = AcquireChannelDetailsUseCase()
     ):
         """"""
         self._get_any_youtube_videos_use_case = any_videos_use_case

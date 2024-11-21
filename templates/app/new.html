@@ -70,7 +70,6 @@
                 <form id="rejectedForm{{ forloop.counter }}" >
                     {% csrf_token %}
                     <input type="hidden" value="{{ entity.title }}" class="form-control" name="title">
-<!--                    <input type="hidden" value='{{ entity.published_at|date:"d.m.Y H:i:s" }}' class="form-control" name="published_at">-->
                     <input type="hidden" value='{{ entity.published_at|date:"Y-m-d\TH:i:s" }}' class="form-control" name="published_at">
                     <input type="hidden" value="{{ entity.channel_title }}" class="form-control" name="channel_title">
                     <input type="hidden" value="{{ entity.video_id }}" class="form-control" name="video_id">

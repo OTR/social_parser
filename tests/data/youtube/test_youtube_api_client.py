@@ -1,7 +1,7 @@
 import os
+from unittest.mock import Mock, patch
 
 import pytest
-from unittest.mock import Mock, patch
 from googleapiclient.errors import HttpError
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.test_settings")
@@ -22,7 +22,7 @@ def setup_env(monkeypatch):
 
 
 def test_get_latest_videos_success(setup_env):
-    # Create a mock for the Youtube API client
+    # Create a mock for the YouTube API client
     mock_youtube_client = Mock()
     mock_youtube_client.search().list().execute.return_value = {
         "nextPageToken": "next_page_token",
