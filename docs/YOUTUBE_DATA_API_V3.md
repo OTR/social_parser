@@ -1,23 +1,5 @@
 # Метод search
 
-## API Keys
-
-AIzaSyD9ln5Ibdcj-DGpTPhRXOAMZgdvUHWrWDU
-AIzaSyBcoj5j3OiV4Du0LdilUjNNg9B-TDRtOOM
-AIzaSyCLBJESzFDNFYoOXkq40wgEdOXyTE_Us3g
-AIzaSyB87VSrcfaQ9rvnUIw9uL4u99S_suxxOzQ
-
-AIzaSyAgTLMvZ_EFFMgSlrYZXy3Nsdf3a01U8aY
-
-AIzaSyA5GdHo2jKO2sanRyDFbxumliwQhi_aj78
-AIzaSyDeNjPuEVddTj6LIsqJZbW0QBNk0gbpqBY
-AIzaSyA3hzkd8eVoq292hCPK9FDR-T6VxTzASlk
-AIzaSyCLENGYz-XX-imhHJOD7o0IkEqb_73yUb0
-
-### All keys separated by semicolon:
-
-YOUTUBE_DATA_API_V3_KEYS=AIzaSyD9ln5Ibdcj-DGpTPhRXOAMZgdvUHWrWDU;AIzaSyBcoj5j3OiV4Du0LdilUjNNg9B-TDRtOOM;AIzaSyCLBJESzFDNFYoOXkq40wgEdOXyTE_Us3g;AIzaSyB87VSrcfaQ9rvnUIw9uL4u99S_suxxOzQ;AIzaSyAgTLMvZ_EFFMgSlrYZXy3Nsdf3a01U8aY;AIzaSyA5GdHo2jKO2sanRyDFbxumliwQhi_aj78;AIzaSyDeNjPuEVddTj6LIsqJZbW0QBNk0gbpqBY;AIzaSyA3hzkd8eVoq292hCPK9FDR-T6VxTzASlk;AIzaSyCLENGYz-XX-imhHJOD7o0IkEqb_73yUb0
-
 ## HTTP-запрос
 
 `GET https://www.googleapis.com/youtube/v3/search`
@@ -34,7 +16,7 @@ Set as `snippet`
 ### order (string)
 
 Параметр order указывает метод, который будет использоваться
-для упорядочивания ресурсов в ответе API. Значение по умолчанию — relevance .
+для упорядочивания ресурсов в ответе API. Значение по умолчанию — relevance.
 
 Приемлемые значения:
 date — ресурсы сортируются в обратном хронологическом порядке по дате их создания.

@@ -1,0 +1,15 @@
+services:
+  web:
+    build:
+      context: ../..
+      dockerfile: .docker/local_sqlite/Dockerfile
+    container_name: django_local_social_parser
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../..:/app
+    env_file:
+      - ../../prod.env
+    command: >
+      bash -c "python manage.py migrate --settings=config.settings.test_settings &&
+               python manage.py runserver 0.0.0.0:8000 --settings=config.settings.test_settings"

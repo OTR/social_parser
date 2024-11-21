@@ -4,7 +4,6 @@ Concrete production settings for `pythonanywhere.com`, extend base production
 
 Variables with leading "U_" mean user defined settings, not Django's
 """
-import os
 
 from config.settings.prod_settings import *
 

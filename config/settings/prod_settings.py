@@ -1,13 +1,13 @@
 """
 Base settings for production use, DO NOT USE IT AS IS, any concrete
-production settings should extend this settings.
+production settings should extend this settings file.
 
 See: https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 """
 import os
 
-from dotenv import load_dotenv
 from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 
 from config.settings.common_settings import *
 

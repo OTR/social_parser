@@ -18,7 +18,7 @@ https://rapidapi.com/developer/billing/billing-information
 
 Должен отобразиться список API ключей, в котором будет наш ключ вида:
 
-`720c100c23msh8c84982e4e4bedap1b37c6jsnb1496b6f5e23`
+`720c100c23msh8c84982e4e4bedap1b37c6jsnb00000`
 
 # Выбор API интеграции из готовой библиотеки
 
