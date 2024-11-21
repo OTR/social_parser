@@ -20,9 +20,9 @@ def change_it() -> None:
     get_random_secret_key; print(get_random_secret_key())'`
     to generate a new secret key.
     """
-    raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
+    raise ImproperlyConfigured("The environment variable DJANGO_SECRET_KEY must not be empty.")
 
 
 ALLOWED_HOSTS = []
 DEBUG = False
-SECRET_KEY = os.getenv("SECRET_KEY") or change_it()
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") or change_it()

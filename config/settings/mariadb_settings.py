@@ -4,7 +4,6 @@ Concrete production settings for `pythonanywhere.com`, extend base production
 
 Variables with leading "U_" mean user defined settings, not Django's
 """
-
 from config.settings.prod_settings import *
 
 # Your login on hosting
@@ -12,21 +11,20 @@ U_LOGIN = os.environ.get("U_LOGIN")
 U_HOST = os.environ.get("U_HOST")
 U_DB_PASSWD = os.environ.get("U_DB_PASSWD")
 # MySQL table name, creates on a dashboard
-U_TABLE_NAME = "botdb"
+U_DB_NAME = os.environ.get("U_DB_NAME")
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": f"{U_TABLE_NAME}",
+        "NAME": f"{U_DB_NAME}",
         "HOST": f"{U_HOST}",
         "USER": f"{U_LOGIN}",
         "PASSWORD": f"{U_DB_PASSWD}",
     },
 }
 
-# TODO: Use ENVIRONMENT VARIABLE instead of hardcoded timezone
 TIME_ZONE = "Etc/GMT-3"  # UTC+3
 USE_I18N = True
 USE_L10N = True
