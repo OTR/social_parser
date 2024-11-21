@@ -1,24 +1,27 @@
-""""""
 import json
+import os
 from pathlib import Path
 from typing import IO
 
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-def download():
+def download(rapid_api_key: str, keyword: str):
     """
     Calls remote RapidAPI service to gather recently uploaded videos by the given keyword
     """
     url = "https://tokapi-mobile-version.p.rapidapi.com/v1/search/post"
     querystring = {
-        "keyword": "Арсен Маркарян",
+        "keyword": f"{keyword}",
         "count": "10",
         "offset": "0",
         "sort_type": "3"
     }
     headers = {
-        "x-rapidapi-key": "720c100c23msh8c84982e4e4bedap1b37c6jsnb1496b6f5e23",
+        "x-rapidapi-key": f"{rapid_api_key}",
         "x-rapidapi-host": "tokapi-mobile-version.p.rapidapi.com"
     }
     response = requests.get(url, headers=headers, params=querystring)
@@ -48,5 +51,7 @@ def read_from_tokapi_mobile():
 
 
 if __name__ == '__main__':
-    # download()
+    rapid_api_key: str = os.environ.get("RAPID_API_KEY")
+    keyword: str = "aiogram"
+    # download(rapid_api_key, keyword)
     read_from_tokapi_mobile()
