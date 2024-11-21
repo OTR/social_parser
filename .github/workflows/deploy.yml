@@ -31,7 +31,7 @@ jobs:
           VDS_PROJECT_DIR: ${{ secrets.VDS_PROJECT_DIR }}
         run: |
           ssh -o StrictHostKeyChecking=no $VDS_USER@$VDS_IP << 'EOF'
-            echo $VDS_PROJECT_DIR
+            echo "$VDS_PROJECT_DIR"
             cd /home/bot/social_parser && \
             echo "Current Directory: $VDS_PROJECT_DIR"
             ls -al $VDS_PROJECT_DIR
@@ -49,6 +49,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no $VDS_USER@$VDS_IP << 'EOF'
             cd $VDS_PROJECT_DIR && \
             git pull origin main && \
-            docker-compose -f .docker/remote_postgres/docker-compose.yml down && \
-            docker-compose -f .docker/remote_postgres/docker-compose.yml up -d --build
+            docker-compose -f ./.docker/remote_postgres/docker-compose.yml down && \
+            docker-compose -f ./.docker/remote_postgres/docker-compose.yml up -d --build
           EOF
