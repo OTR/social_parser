@@ -34,6 +34,8 @@ To run the application with file based SQLite3 database, just in case of smoke t
 
 To run the application for development with local PostgreSQL server
 
+TODO
+
 ```bash
 poetry install -E dev
 ```
