@@ -24,6 +24,9 @@ jobs:
       - name: Verify SSH Key
         run: ssh-add -l
 
+      - name: Debug Environment Variables
+        run: printenv
+
       - name: Debug Remote Directory
         env:
           VDS_USER: ${{ secrets.VDS_USER }}
