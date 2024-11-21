@@ -12,4 +12,5 @@ services:
       - ../../prod.env
     command: >
       bash -c "python manage.py migrate --settings=config.settings.test_settings &&
+               python manage.py create_superuser &&
                python manage.py runserver 0.0.0.0:8000 --settings=config.settings.test_settings"

@@ -56,13 +56,13 @@ TODO
 ### 2. Run `docker-compose build`
 
 ```bash
-docker-compose -f .docker/docker-compose.yml build
+docker-compose -f .docker/local_sqlite/docker-compose.yml build
 ```
 
 ### 3. Run `docker-compose up`
 
 ```bash
-docker-compose -f .docker/docker-compose.yml up
+docker-compose -f .docker/local_sqlite/docker-compose.yml up
 ```
 
 ## Run django application locally backed by PostgreSQL database
