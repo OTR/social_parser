@@ -25,4 +25,4 @@ def change_it() -> None:
 
 ALLOWED_HOSTS = []
 DEBUG = False
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") or change_it()
+# SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") or change_it()
