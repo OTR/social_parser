@@ -93,3 +93,12 @@ eval "$(ssh-agent -s)"
 ```bash
 ssh-add ~/.ssh/id_ed25519
 ```
+
+# Check the SSH Server Configuration
+
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+----
+
