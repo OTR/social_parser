@@ -1,9 +1,7 @@
-version: '3.9'
-
 services:
   main-app:
     build:
-      context: ..
+      context: ../../..
       dockerfile: Dockerfile
     container-name: main-app
     ports:
