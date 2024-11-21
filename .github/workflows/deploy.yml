@@ -31,6 +31,7 @@ jobs:
           VDS_PROJECT_DIR: ${{ secrets.VDS_PROJECT_DIR }}
         run: |
           ssh -o StrictHostKeyChecking=no $VDS_USER@$VDS_IP << 'EOF'
+            cd $VDS_PROJECT_DIR
             echo "Current Directory: $VDS_PROJECT_DIR"
             ls -al $VDS_PROJECT_DIR
             ls -al $VDS_PROJECT_DIR/.docker/remote_postgres/
