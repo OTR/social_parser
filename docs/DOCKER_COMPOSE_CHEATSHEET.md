@@ -35,3 +35,22 @@ If your containers were started with docker-compose, use the following commands 
 ```bash
 docker-compose down
 ```
+
+# Show Container Logs
+
+## Show Logs for a Specific Container
+
+docker logs <container_name_or_id>
+
+##  Follow Live Logs (Real-Time)
+
+docker logs -f <container_name_or_id>
+
+## Show Specific Number of Log Lines
+
+docker logs --tail 50 django_remote_social_parser
+
+## Include Timestamps
+
+docker logs --timestamps <container_name_or_id>
+

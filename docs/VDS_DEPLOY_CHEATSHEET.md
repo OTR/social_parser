@@ -102,3 +102,31 @@ sudo nano /etc/ssh/sshd_config
 
 ----
 
+# failed to bind port 0.0.0.0:80/tcp
+
+Error starting userland proxy: listen tcp4 0.0.0.0:80: bind: address already in use
+
+ Identify the Process Using Port 80
+
+```bash
+sudo lsof -i :80
+```
+
+# Use a Reverse Proxy
+
+## Configure Nginx: Edit your Nginx configuration
+
+`/etc/nginx/sites-available/default`
+
+```nginx
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;  # Forward to your container's exposed port
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```

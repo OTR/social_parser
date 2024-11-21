@@ -20,6 +20,7 @@ telethon = "1.37.0"
 pytest = "8.3.2"
 wemake-python-styleguide = "0.19.2"
 aiogram = "3.15.0"
+gunicorn = "^23.0.0"
 
 
 [build-system]
