@@ -25,6 +25,10 @@ jobs:
         run: ssh-add -l
 
       - name: Debug Environment Variables
+        env:
+          VDS_USER: ${{ secrets.VDS_USER }}
+          VDS_IP: ${{ secrets.VDS_IP }}
+          VDS_PROJECT_DIR: ${{ secrets.VDS_PROJECT_DIR }}
         run: printenv
 
       - name: Debug Remote Directory
