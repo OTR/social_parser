@@ -130,3 +130,39 @@ server {
     }
 }
 ```
+
+# Create a new ssh key
+
+```bash
+ssh-keygen -t ed25519 -C "github-actions-deploy" -f ~/.ssh/github_actions_deploy
+```
+
+# Add the key to the ~/.ssh/authorized_keys file on the remote server:
+
+```bash
+ssh <user>@<remote_ip> "mkdir -p ~/.ssh && chmod 700 ~/.ssh && echo '$(cat ~/.ssh/github_actions_deploy.pub)' >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+```
+
+# Use a Custom SSH Configuration
+Edit the SSH Configuration File: Open your SSH configuration file (~/.ssh/config) or create one if it doesn’t exist:
+
+```bash
+nano ~/.ssh/config
+```
+
+# Add a Host Configuration for GitHub: Add an entry specifying the exact key for GitHub:
+
+```bash
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github_actions_deploy
+    IdentitiesOnly yes
+```
+
+# Set Permissions: Ensure the permissions for the SSH configuration file are correct:
+
+```bash
+chmod 600 ~/.ssh/config
+```
+
