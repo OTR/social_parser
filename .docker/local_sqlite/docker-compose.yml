@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ../..:/app
+      - "../..:/app"
     env_file:
       - ../../prod.env
     command: >

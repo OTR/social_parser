@@ -34,6 +34,13 @@ jobs:
           ssh -o StrictHostKeyChecking=no $VDS_USER@$VDS_IP << 'EOF'
             cd /home/bot/social_parser && \
             git pull origin main && \
+            docker build -f .docker/remote_postgres/Dockerfile --tag my-python:3.12
+            export BRANCH=master
+            docker build --tag social_parser:$BRANCH .
             docker-compose -f ./.docker/remote_postgres/docker-compose.yml down && \
-            docker-compose -f ./.docker/remote_postgres/docker-compose.yml up -d --build
+            docker-compose -f ./.docker/remote_postgres/docker-compose.yml up -d --build && \
+            docker-compose exec -T web python manage.py migrate --settings=config.settings.postgres_settings && \
+            docker-compose exec -T web python manage.py create_superuser && \
+            docker-compose exec -T web python manage.py collectstatic --noinput --settings=config.settings.postgres_settings && \
+            docker-compose exec -T web gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
           EOF
