@@ -1,8 +1,8 @@
 services:
   main-app:
     build:
-      context: ../../..
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: .docker/local_postgres/Dockerfile
     container-name: main-app
     ports:
       - "${DJANGO_PORT}:8000"
