@@ -1,4 +1,3 @@
-""""""
 from django.urls import path
 from app.views import AlertView, IndexView, KnownContentView, NewContentView
 from app.views.api import NewContentApiView, add_highlighter, add_rejected
